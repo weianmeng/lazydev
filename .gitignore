@@ -4,3 +4,4 @@
 
 /src/SampleWeb/Properties/PublishProfiles/*.pubxml
 /src/SampleWeb/Properties/PublishProfiles/*.user
+/.vs/LazyDev/v16/*.suo
