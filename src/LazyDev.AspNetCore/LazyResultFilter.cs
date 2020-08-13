@@ -6,7 +6,7 @@ namespace LazyDev.AspNetCore
     /// <summary>
     /// 包装统一的Json返回格式
     /// </summary>
-    public class GlobalResultFilter : ActionFilterAttribute
+    public class LazyResultFilter : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {

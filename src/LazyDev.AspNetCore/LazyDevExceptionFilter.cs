@@ -6,12 +6,12 @@ using Microsoft.Extensions.Logging;
 
 namespace LazyDev.AspNetCore
 {
-    public class GlobalExceptionFilter : ExceptionFilterAttribute
+    public class LazyDevExceptionFilter : ExceptionFilterAttribute
     {
-        private readonly ILogger<GlobalExceptionFilter> _logger;
+        private readonly ILogger<LazyDevExceptionFilter> _logger;
         private readonly IWebHostEnvironment _env;
 
-        public GlobalExceptionFilter(ILogger<GlobalExceptionFilter> logger, IWebHostEnvironment env)
+        public LazyDevExceptionFilter(ILogger<LazyDevExceptionFilter> logger, IWebHostEnvironment env)
         {
             _logger = logger;
             _env = env;

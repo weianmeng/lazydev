@@ -24,8 +24,8 @@ namespace LazyDev.AspNetCore
 
             var builder = mvcBuilder.AddMvcOptions(mvcOptions =>
             {
-                mvcOptions.Filters.Add<GlobalResultFilter>();
-                mvcOptions.Filters.Add<GlobalExceptionFilter>();
+                mvcOptions.Filters.Add<LazyResultFilter>();
+                mvcOptions.Filters.Add<LazyDevExceptionFilter>();
             });
             //使用FluentValidation
             if (options.UseFluentValidation)
