@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyDev.AspNetCore", "src\L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lazyDev.Dapper", "src\lazyDev.Dapper\lazyDev.Dapper.csproj", "{FD302891-92AC-4614-9BAF-EDCAB9D245D6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lazyDev.Dapper.MySql", "src\lazyDev.Dapper.MySql\lazyDev.Dapper.MySql.csproj", "{078334F5-0AEC-4138-B081-B2AE3DCF9E25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FD302891-92AC-4614-9BAF-EDCAB9D245D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD302891-92AC-4614-9BAF-EDCAB9D245D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD302891-92AC-4614-9BAF-EDCAB9D245D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078334F5-0AEC-4138-B081-B2AE3DCF9E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078334F5-0AEC-4138-B081-B2AE3DCF9E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078334F5-0AEC-4138-B081-B2AE3DCF9E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078334F5-0AEC-4138-B081-B2AE3DCF9E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
