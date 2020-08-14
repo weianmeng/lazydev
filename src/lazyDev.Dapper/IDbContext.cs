@@ -8,6 +8,5 @@ namespace lazyDev.Dapper
     {
         void AddCommand(Func<IDbConnection, IDbTransaction, Task> func);
         Task<bool> CommitAsync();
-        IDbConnection GetConnection(bool isMaster = true);
     }
 }

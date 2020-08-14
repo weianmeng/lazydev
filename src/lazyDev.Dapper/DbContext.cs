@@ -9,11 +9,12 @@ namespace lazyDev.Dapper
     public class DbContext:IDbContext
     {
         private readonly List<Func<IDbConnection, IDbTransaction, Task>> _commands;
+
         private readonly ILogger<DbContext> _logger;
 
-        public DbContext(List<Func<IDbConnection, IDbTransaction, Task>> commands, ILogger<DbContext> logger)
+        public DbContext(ILogger<DbContext> logger)
         {
-            _commands = commands;
+            _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
             _logger = logger;
         }
 
@@ -29,11 +30,11 @@ namespace lazyDev.Dapper
             {
                 using (var conn = GetConnection())
                 {
+                    
                     if (conn.State == ConnectionState.Closed)
                     {
                         conn.Open();
                     }
-                    
                     using (var tran = conn.BeginTransaction())
                     {
                         foreach (var fun in _commands)
@@ -59,6 +60,7 @@ namespace lazyDev.Dapper
 
         public IDbConnection GetConnection(bool isMaster = true)
         {
+           
             throw new NotImplementedException();
         }
     }

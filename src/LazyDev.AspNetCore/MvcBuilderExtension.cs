@@ -51,6 +51,7 @@ namespace LazyDev.AspNetCore
             return mvcBuilder;
         }
 
+
         /// <summary>
         /// 验证返回统一的格式
         /// </summary>
