@@ -1,6 +1,7 @@
 ﻿using LazyDev.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SampleWeb.Service;
 using SampleWeb.Service.Models;
 using System;

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -10,12 +9,18 @@ namespace lazyDev.Dapper
     {
         private readonly List<Func<IDbConnection, IDbTransaction, Task>> _commands;
 
-        private readonly ILogger<DbContext> _logger;
 
-        public DbContext(ILogger<DbContext> logger)
+        private readonly Func<string,bool, IDbConnection> DbConnectionFunc;
+
+        public DbContext(Func<string,bool, IDbConnection> dbconnectionFunc)
+        {
+            DbConnectionFunc = dbconnectionFunc;
+        }
+
+        public DbContext()
         {
             _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
-            _logger = logger;
+
         }
 
         public void AddCommand(Func<IDbConnection, IDbTransaction, Task> func)
@@ -52,7 +57,6 @@ namespace lazyDev.Dapper
             }
             catch (Exception e)
             {
-                _logger.LogError(e,"事务提交失败");
                 throw;
             }
 
@@ -60,8 +64,8 @@ namespace lazyDev.Dapper
 
         public IDbConnection GetConnection(bool isMaster = true)
         {
-           
-            throw new NotImplementedException();
+
+            return DbConnectionFunc(isMaster);
         }
     }
 }

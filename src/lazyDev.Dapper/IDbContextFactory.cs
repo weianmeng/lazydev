@@ -2,6 +2,6 @@
 {
     public interface IDbContextFactory
     {
-        IDbContext CreateDbContext(string configSectionName);
+        IDbContext CreateDbContext(string dbName);
     }
 }

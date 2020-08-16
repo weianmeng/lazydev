@@ -8,4 +8,8 @@
     <PackageReference Include="MySqlConnector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -25,6 +25,7 @@ namespace SampleWeb
                     c.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly());
                 });
             services.AddSwaggerDocument();
+            services.AddHttpClient();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

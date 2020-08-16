@@ -1,19 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-
-namespace lazyDev.Dapper
+﻿namespace lazyDev.Dapper
 {
-    public class DbContextFactory:IDbContextFactory
+    public class DbContextFactory : IDbContextFactory
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IDbConnectionFactory dbConnectionFactory;
 
-        public DbContextFactory(IServiceProvider serviceProvider)
+        public DbContextFactory(IDbConnectionFactory dbConnectionFactory)
         {
-            _serviceProvider = serviceProvider;
+            this.dbConnectionFactory = dbConnectionFactory;
         }
-        public IDbContext CreateDbContext(string configSectionName)
+        public IDbContext CreateDbContext(string dbName)
         {
-            return _serviceProvider.GetService<IDbContext>();
+            return new DbContext(isMaster => dbConnectionFactory.GetLazyDbConnection(dbName, isMaster));
         }
     }
 }
