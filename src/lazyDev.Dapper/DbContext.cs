@@ -10,17 +10,20 @@ namespace lazyDev.Dapper
         private readonly List<Func<IDbConnection, IDbTransaction, Task>> _commands;
 
 
-        private readonly Func<string,bool, IDbConnection> DbConnectionFunc;
-
-        public DbContext(Func<string,bool, IDbConnection> dbconnectionFunc)
-        {
-            DbConnectionFunc = dbconnectionFunc;
-        }
+        private Func<bool, IDbConnection> _dbConnectionFunc;
 
         public DbContext()
         {
+           
             _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
+        }
 
+        public void SetDbConnection(Func<bool, IDbConnection> DbConnectionFunc)
+        {
+            if (_dbConnectionFunc == null)
+            {
+                _dbConnectionFunc = DbConnectionFunc;
+            } 
         }
 
         public void AddCommand(Func<IDbConnection, IDbTransaction, Task> func)
@@ -64,8 +67,7 @@ namespace lazyDev.Dapper
 
         public IDbConnection GetConnection(bool isMaster = true)
         {
-
-            return DbConnectionFunc(isMaster);
+            return _dbConnectionFunc(isMaster);
         }
     }
 }
