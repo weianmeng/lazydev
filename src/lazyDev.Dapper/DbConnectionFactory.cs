@@ -7,17 +7,18 @@ namespace lazyDev.Dapper
 {
     public abstract class DbConnectionFactory : IDbConnectionFactory
     {
-        private readonly IOptions<DbConnectionOptions> options;
-        private static ushort DbIndex = 0;
-        public DbConnectionFactory(IOptions<DbConnectionOptions> options)
+        private readonly IOptions<DbConnectionOptions> _options;
+        private static ushort _dbIndex;
+
+        protected DbConnectionFactory(IOptions<DbConnectionOptions> options)
         {
-            this.options = options;
+            this._options = options;
         }
 
         public DbConnection GetLazyDbConnection(string dbName, bool master = true)
         {
 
-            var dbConfig = options.Value.DbConnectionConfigs.FirstOrDefault(x => x.DbName == dbName);
+            var dbConfig = _options.Value.DbConnectionConfigs.FirstOrDefault(x => x.DbName == dbName);
 
             if (dbConfig == null)
             {
@@ -28,8 +29,8 @@ namespace lazyDev.Dapper
                 return new LayDevDbConnection(GetDbConnection(dbConfig.MasterConn));
             }
             //从库轮询
-            DbIndex++;
-            var index = DbIndex % dbConfig.ReplicaConns.Count();
+            _dbIndex++;
+            var index = _dbIndex % dbConfig.ReplicaConns.Count();
             return new LayDevDbConnection(GetDbConnection(dbConfig.ReplicaConns[index]));
         }
 

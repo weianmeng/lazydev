@@ -6,7 +6,7 @@ namespace lazyDev.Dapper
 {
     public interface IDbContext
     {
-        void SetDbConnection(Func<bool, IDbConnection> DbConnectionFunc);
+        void SetDbConnection(Func<bool, IDbConnection> dbConnectionFunc);
         void AddCommand(Func<IDbConnection, IDbTransaction, Task> func);
         Task<bool> CommitAsync();
     }

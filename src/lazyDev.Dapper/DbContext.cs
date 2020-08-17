@@ -18,11 +18,11 @@ namespace lazyDev.Dapper
             _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
         }
 
-        public void SetDbConnection(Func<bool, IDbConnection> DbConnectionFunc)
+        public void SetDbConnection(Func<bool, IDbConnection> dbConnectionFunc)
         {
             if (_dbConnectionFunc == null)
             {
-                _dbConnectionFunc = DbConnectionFunc;
+                _dbConnectionFunc = dbConnectionFunc;
             } 
         }
 
@@ -34,35 +34,27 @@ namespace lazyDev.Dapper
 
         public async Task<bool> CommitAsync()
         {
-            try
+            using (var conn = GetConnection())
             {
-                using (var conn = GetConnection())
-                {
                     
-                    if (conn.State == ConnectionState.Closed)
-                    {
-                        conn.Open();
-                    }
-                    using (var tran = conn.BeginTransaction())
-                    {
-                        foreach (var fun in _commands)
-                        {
-                            
-                            await fun(conn, tran);
-                        }
-
-                        tran.Commit();
-                    }
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
                 }
-                var count = _commands.Count;
-                _commands.Clear();
-                return count > 0;
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+                using (var tran = conn.BeginTransaction())
+                {
+                    foreach (var fun in _commands)
+                    {
+                            
+                        await fun(conn, tran);
+                    }
 
+                    tran.Commit();
+                }
+            }
+            var count = _commands.Count;
+            _commands.Clear();
+            return count > 0;
         }
 
         public IDbConnection GetConnection(bool isMaster = true)

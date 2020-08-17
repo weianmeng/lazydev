@@ -5,19 +5,19 @@ namespace lazyDev.Dapper
 {
     public class DbContextFactory : IDbContextFactory
     {
-        private readonly IDbConnectionFactory dbConnectionFactory;
-        private readonly IServiceProvider serviceProvider;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
+        private readonly IServiceProvider _serviceProvider;
        
         public DbContextFactory(IDbConnectionFactory dbConnectionFactory,IServiceProvider serviceProvider)
         {
-            this.dbConnectionFactory = dbConnectionFactory;
-            this.serviceProvider = serviceProvider;
+            _dbConnectionFactory = dbConnectionFactory;
+            _serviceProvider = serviceProvider;
         }
         public IDbContext CreateDbContext(string dbName)
         {
-            var dbContext = serviceProvider.GetService<IDbContext>();
+            var dbContext = _serviceProvider.GetService<IDbContext>();
             
-            dbContext.SetDbConnection(isMaster => dbConnectionFactory.GetLazyDbConnection(dbName, isMaster));
+            dbContext.SetDbConnection(isMaster => _dbConnectionFactory.GetLazyDbConnection(dbName, isMaster));
             return dbContext; 
         }
     }
