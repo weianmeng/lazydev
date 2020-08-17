@@ -5,6 +5,6 @@ namespace lazyDev.Dapper
     public interface IDbConnectionFactory
     {
      
-        DbConnection GetLazyDbConnection(string dbName, bool master = true);
+        DbConnection GetLazyDbConnection(bool master = true);
     }
 }

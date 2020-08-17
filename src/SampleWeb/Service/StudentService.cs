@@ -6,12 +6,14 @@ namespace SampleWeb.Service
     [Component]
     public class StudentService : IStudentService
     {
-        private readonly IDapper dapper;
+        private readonly IDbContext _dbContext;
 
-        public StudentService(IDapper dapper)
+        public StudentService(IDbContext dbContext)
         {
-            this.dapper = dapper;
+            _dbContext = dbContext;
         }
+
+
         public Student GetName()
         {
             return new Student
@@ -22,7 +24,7 @@ namespace SampleWeb.Service
 
         public Student GetNameException()
         {
-            dapper.Query()
+            
             throw  new LazyDevException("获取姓名失败","404");
         }
     }

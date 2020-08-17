@@ -5,30 +5,23 @@ using System.Threading.Tasks;
 
 namespace lazyDev.Dapper
 {
-    public class DbContext:IDbContext
+    public class DbContext : IDbContext
     {
+        private readonly IDbConnectionFactory _dbConnectionFactory;
+
         private readonly List<Func<IDbConnection, IDbTransaction, Task>> _commands;
 
-
-        private Func<bool, IDbConnection> _dbConnectionFunc;
-
-        public DbContext()
+        public DbContext(IDbConnectionFactory dbConnectionFactory)
         {
-           
+            _dbConnectionFactory = dbConnectionFactory;
+
+
             _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
         }
 
-        public void SetDbConnection(Func<bool, IDbConnection> dbConnectionFunc)
-        {
-            if (_dbConnectionFunc == null)
-            {
-                _dbConnectionFunc = dbConnectionFunc;
-            } 
-        }
 
         public void AddCommand(Func<IDbConnection, IDbTransaction, Task> func)
         {
-
             _commands.Add(func);
         }
 
@@ -36,7 +29,7 @@ namespace lazyDev.Dapper
         {
             using (var conn = GetConnection())
             {
-                    
+
                 if (conn.State == ConnectionState.Closed)
                 {
                     conn.Open();
@@ -45,13 +38,14 @@ namespace lazyDev.Dapper
                 {
                     foreach (var fun in _commands)
                     {
-                            
+
                         await fun(conn, tran);
                     }
 
                     tran.Commit();
                 }
             }
+
             var count = _commands.Count;
             _commands.Clear();
             return count > 0;
@@ -59,7 +53,27 @@ namespace lazyDev.Dapper
 
         public IDbConnection GetConnection(bool isMaster = true)
         {
-            return _dbConnectionFunc(isMaster);
+            return _dbConnectionFactory.GetLazyDbConnection(isMaster);
         }
+
+        #region Query
+
+        public async Task<T> QueryAsync<T>(Func<IDbConnection, Task<T>> func)
+        {
+            using (var conn = GetConnection(false))
+            {
+                return await func(conn);
+            }
+        }
+
+        public T Query<T>(Func<IDbConnection, T> func)
+        {
+            using (var conn = GetConnection(false))
+            {
+                return func(conn);
+            }
+        }
+
+        #endregion
     }
 }

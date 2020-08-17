@@ -1,13 +1,11 @@
-﻿using Microsoft.Extensions.Options;
-using MySqlConnector;
+﻿using MySqlConnector;
 using System.Data.Common;
 
 namespace lazyDev.Dapper.MySql
 {
-    public class MySqlDbConnectionFactory : DbConnectionFactory
+    public class MySqlDbConnectionFactory : BaseDbConnectionFactory
     {
-        public MySqlDbConnectionFactory(IOptions<DbConnectionOptions> options) 
-            : base(options)
+        public MySqlDbConnectionFactory(IConnectionOption options) : base(options)
         {
         }
 
