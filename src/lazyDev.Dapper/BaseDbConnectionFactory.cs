@@ -12,7 +12,7 @@ namespace lazyDev.Dapper
             _options = options;
         }
 
-        public DbConnection GetLazyDbConnection(bool master = true)
+        public DbConnection GetDbConnection(bool master = false)
         {
 
             if (master)

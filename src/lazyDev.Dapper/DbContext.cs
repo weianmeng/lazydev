@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace lazyDev.Dapper
 {
@@ -29,6 +30,7 @@ namespace lazyDev.Dapper
         {
             using (var conn = GetConnection())
             {
+      
 
                 if (conn.State == ConnectionState.Closed)
                 {
@@ -53,7 +55,7 @@ namespace lazyDev.Dapper
 
         public IDbConnection GetConnection(bool isMaster = true)
         {
-            return _dbConnectionFactory.GetLazyDbConnection(isMaster);
+            return _dbConnectionFactory.GetDbConnection(isMaster);
         }
 
         #region Query

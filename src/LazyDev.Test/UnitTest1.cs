@@ -1,8 +1,10 @@
+
 using Dapper;
 using lazyDev.Dapper;
+using lazyDev.Dapper.MySql;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
-using lazyDev.Dapper.MySql;
+using Dapper.Contrib.Extensions;
 using Xunit;
 
 namespace LazyDev.Test
@@ -27,7 +29,9 @@ namespace LazyDev.Test
             var provider = services.BuildServiceProvider();
 
             var db = provider.GetService<IDbContext>();
+
             db.AddCommand((conn, tran) => conn.ExecuteAsync("", null, tran));
+            db.AddCommand((conn, tran) => conn.InsertAsync(new {x=3}));
 
             await db.QueryAsync(x => x.QuerySingleAsync<string>("",null));
             db.Query(x => x.Query<string>(""));
@@ -35,6 +39,7 @@ namespace LazyDev.Test
             {
                 
             }
+
 
             await db.CommitAsync();
 

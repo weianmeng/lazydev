@@ -1,4 +1,5 @@
-﻿using lazyDev.Dapper;
+﻿using Dapper;
+using lazyDev.Dapper;
 using LazyDev.AspNetCore;
 
 namespace SampleWeb.Service
@@ -24,7 +25,7 @@ namespace SampleWeb.Service
 
         public Student GetNameException()
         {
-            
+            _dbContext.QueryAsync(x => x.QueryAsync("", null));
             throw  new LazyDevException("获取姓名失败","404");
         }
     }
