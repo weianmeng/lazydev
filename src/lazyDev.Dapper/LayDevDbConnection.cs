@@ -1,16 +1,18 @@
 ﻿using System.Data;
 using System.Data.Common;
+using Microsoft.Extensions.Logging;
 
 namespace lazyDev.Dapper
 {
-    public class LayDevDbConnection : DbConnection
+    internal class LayDevDbConnection : DbConnection
     {
         private readonly DbConnection _dbConnection;
+        private readonly ILogger _logger;
 
-        public LayDevDbConnection(DbConnection dbConnection)
+        public LayDevDbConnection(DbConnection dbConnection,ILogger logger)
         {
             _dbConnection = dbConnection;
-
+            _logger = logger;
         }
         public override string ConnectionString
         {
@@ -50,7 +52,12 @@ namespace lazyDev.Dapper
         protected override DbCommand CreateDbCommand()
         {
             var cmd = _dbConnection.CreateCommand();
-            return cmd;
+            
+            return new LazyDevDbCommand(cmd,_logger);
+            ////记录执行sql
+            //_logger.LogDebug(cmd.CommandText);
+            
+            //return cmd;
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace SampleWeb.Service
+﻿using System.Threading.Tasks;
+
+namespace SampleWeb.Service
 {
     public interface IStudentService
     {
-        Student GetName();
+        Task<Student> GetName();
         Student GetNameException();
 
     }

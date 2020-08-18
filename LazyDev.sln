@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lazyDev.Dapper", "src\lazyD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lazyDev.Dapper.MySql", "src\lazyDev.Dapper.MySql\lazyDev.Dapper.MySql.csproj", "{078334F5-0AEC-4138-B081-B2AE3DCF9E25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyDev.Test", "src\LazyDev.Test\LazyDev.Test.csproj", "{AF176151-3DFF-4492-8D91-0462294EF8F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyDev.Test", "src\LazyDev.Test\LazyDev.Test.csproj", "{AF176151-3DFF-4492-8D91-0462294EF8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyDev.Dapper.PostgreSql", "src\LazyDev.Dapper.PostgreSQL\LazyDev.Dapper.PostgreSql.csproj", "{BA85F82F-E4C1-45D2-A066-8FE74A62BED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AF176151-3DFF-4492-8D91-0462294EF8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF176151-3DFF-4492-8D91-0462294EF8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF176151-3DFF-4492-8D91-0462294EF8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA85F82F-E4C1-45D2-A066-8FE74A62BED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA85F82F-E4C1-45D2-A066-8FE74A62BED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA85F82F-E4C1-45D2-A066-8FE74A62BED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA85F82F-E4C1-45D2-A066-8FE74A62BED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

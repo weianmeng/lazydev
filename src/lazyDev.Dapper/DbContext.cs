@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Dapper;
+using Microsoft.Extensions.Logging;
 
 namespace lazyDev.Dapper
 {
     public class DbContext : IDbContext
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
+        private readonly ILogger<DbContext> _logger;
 
         private readonly List<Func<IDbConnection, IDbTransaction, Task>> _commands;
 
-        public DbContext(IDbConnectionFactory dbConnectionFactory)
+        public DbContext(IDbConnectionFactory dbConnectionFactory,ILogger<DbContext> logger)
         {
             _dbConnectionFactory = dbConnectionFactory;
+            _logger = logger;
 
 
             _commands = new List<Func<IDbConnection, IDbTransaction, Task>>();
@@ -30,8 +32,7 @@ namespace lazyDev.Dapper
         {
             using (var conn = GetConnection())
             {
-      
-
+                
                 if (conn.State == ConnectionState.Closed)
                 {
                     conn.Open();

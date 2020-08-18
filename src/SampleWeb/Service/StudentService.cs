@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Threading.Tasks;
+using Dapper;
 using lazyDev.Dapper;
 using LazyDev.AspNetCore;
 
@@ -15,17 +16,20 @@ namespace SampleWeb.Service
         }
 
 
-        public Student GetName()
+        public async Task<Student> GetName()
         {
+            var id = await _dbContext.QueryAsync(x =>
+                x.QueryFirstOrDefaultAsync<string>("SELECT id from pay_sequence where id=@id",
+                    new {id = "4f500000-4c4f-0290-3869-08d6d5247fb4"}));
             return new Student
             {
-                Name = "李时珍"
+                Name = id
             };
         }
 
         public Student GetNameException()
         {
-            _dbContext.QueryAsync(x => x.QueryAsync("", null));
+         
             throw  new LazyDevException("获取姓名失败","404");
         }
     }

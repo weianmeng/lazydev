@@ -7,6 +7,7 @@ using SampleWeb.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SampleWeb.Controllers
 {
@@ -43,9 +44,9 @@ namespace SampleWeb.Controllers
         }
 
         [HttpGet("hello")]
-        public Student Hello()
+        public async Task<Student> Hello()
         {
-            return _studentService.GetName();
+            return await _studentService.GetName();
         }
 
         [HttpGet("helloError")]

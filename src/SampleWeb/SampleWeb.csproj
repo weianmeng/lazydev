@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LazyDev.AspNetCore\LazyDev.AspNetCore.csproj" />
-    <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
+    <ProjectReference Include="..\lazyDev.Dapper.MySql\lazyDev.Dapper.MySql.csproj" />
     <ProjectReference Include="..\LazyDev.Utilities\LazyDev.Utilities.csproj" />
   </ItemGroup>
 
