@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.Extensions.Logging;
 
 namespace lazyDev.Dapper
@@ -65,6 +66,7 @@ namespace lazyDev.Dapper
         {
             using (var conn = GetConnection(false))
             {
+
                 return await func(conn);
             }
         }

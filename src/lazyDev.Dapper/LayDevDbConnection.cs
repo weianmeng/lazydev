@@ -54,10 +54,6 @@ namespace lazyDev.Dapper
             var cmd = _dbConnection.CreateCommand();
             
             return new LazyDevDbCommand(cmd,_logger);
-            ////记录执行sql
-            //_logger.LogDebug(cmd.CommandText);
-            
-            //return cmd;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Data;
+﻿using Microsoft.Extensions.Logging;
+using System.Data;
 using System.Data.Common;
-using Microsoft.Extensions.Logging;
 
 namespace lazyDev.Dapper
 {
@@ -82,14 +82,32 @@ namespace lazyDev.Dapper
 
         protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
         {
-            _logger.LogInformation(_command.CommandText);
 
-            foreach (DbParameter parameter in _command.Parameters)
+            if (_command.Parameters.Count>0)
             {
-                _logger.LogInformation(parameter.ParameterName);
+                var sql = _command.CommandText;
+                for (int i = _command.Parameters.Count - 1; i >= 0; i--)
+                {
+                    var p = _command.Parameters[i];
+                   
+                     sql = sql.Replace($"@{p.ParameterName}", p.Value.ToString());
+                }
                
+                _logger.LogInformation($"执行sql:{sql}");
             }
+            else
+            {
+                _logger.LogInformation($"执行sql:{_command.CommandText}");
+            }
+
+
+           
+
             return _command.ExecuteReader(behavior);
         }
+        
+
+        
     }
+
 }
