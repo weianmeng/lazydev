@@ -161,6 +161,7 @@ namespace lazyDev.Dapper
             return await Execute(x => x.QuerySingleAsync<T>(sql, param), sql, param);
         }
 
+
         public async Task<T> QuerySingleOrDefaultAsync<T>(
             string sql,
             object param = null)
