@@ -6,13 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
+    <PackageReference Include="Npgsql" Version="3.1.8" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LazyDev.AspNetCore\LazyDev.AspNetCore.csproj" />
-    <ProjectReference Include="..\lazyDev.Dapper.MySql\lazyDev.Dapper.MySql.csproj" />
-    <ProjectReference Include="..\LazyDev.Dapper.PostgreSQL\LazyDev.Dapper.PostgreSql.csproj" />
+    <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
     <ProjectReference Include="..\LazyDev.Utilities\LazyDev.Utilities.csproj" />
   </ItemGroup>
 

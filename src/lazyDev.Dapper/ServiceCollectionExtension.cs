@@ -1,22 +1,36 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Data.Common;
 
 namespace lazyDev.Dapper
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddDapper<T>(this IServiceCollection services, IConfigurationSection section)
-            where T : class, IDbConnectionFactory
+        public static IServiceCollection AddDapper(this IServiceCollection services, Action<DbBuilderOption> dbAction)
         {
-            
-            services.Configure<ConnectionOption>(section);
 
-            //注册连接对象构造工厂
-            services.TryAddSingleton(typeof(IDbConnectionFactory), typeof(T));
-            //注册数据库操作对象
-            services.TryAddScoped<IDapperProxy,DapperProxy>();
+            var dbConfig = new DbBuilderOption();
+            dbAction(dbConfig);
+
+            services.TryAddSingleton<IDbConnectionFactory>(c =>
+                new DbConnectionFactory(
+                    new ConnectionOption()
+                    {
+                        MasterConn = dbConfig.MasterConn,
+                        ReplicasConn = dbConfig.ReplicasConn
+                    },
+                    dbConfig.ConnectionFunc,
+                    c.GetService<ILogger<IDbConnectionFactory>>()));
+
             return services;
+        }
+        public class DbBuilderOption
+        {
+            public Func<string, DbConnection> ConnectionFunc { get; set; }
+            public string MasterConn { get; set; }
+            public string[] ReplicasConn { get; set; }
         }
     }
 }

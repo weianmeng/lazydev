@@ -1,13 +1,12 @@
+using lazyDev.Dapper;
 using LazyDev.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using System.Reflection;
-using lazyDev.Dapper;
-using lazyDev.Dapper.MySql;
-using LazyDev.Dapper.PostgreSql;
 
 namespace SampleWeb
 {
@@ -27,8 +26,12 @@ namespace SampleWeb
                     c.RegisterServiceFromAssemblies(Assembly.GetExecutingAssembly());
                     c.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly());
                 });
- 
-            services.AddDapper<MySqlDbConnectionFactory>(Configuration.GetSection("db"));
+
+            services.AddDapper(x =>
+            {
+                x.ConnectionFunc = conn => new NpgsqlConnection(conn);
+                x.MasterConn = "";
+            });
 
             services.AddSwaggerDocument();
             services.AddHttpClient();

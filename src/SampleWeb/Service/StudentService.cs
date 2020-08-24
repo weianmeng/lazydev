@@ -1,5 +1,5 @@
-﻿using lazyDev.Dapper;
-using LazyDev.AspNetCore;
+﻿using LazyDev.AspNetCore;
+using System;
 using System.Threading.Tasks;
 
 namespace SampleWeb.Service
@@ -7,23 +7,13 @@ namespace SampleWeb.Service
     [Component]
     public class StudentService : IStudentService
     {
-        private readonly IDapperProxy _dapper;
 
 
-        public StudentService(IDapperProxy dapper)
+
+        public  Task<Student> GetName()
         {
-            _dapper = dapper;
-        }
 
-
-        public async Task<Student> GetName()
-        {
-            var id = await _dapper.QueryFirstOrDefaultAsync<string>("SELECT id from pay_sequence where id=@id",
-                new {id = "4f500000-4c4f-0290-3869-08d6d5247fb4"});
-            return new Student
-            {
-                Name = id
-            };
+            throw  new NotImplementedException();
         }
 
         public Student GetNameException()
