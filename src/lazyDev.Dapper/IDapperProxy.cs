@@ -7,63 +7,40 @@ namespace lazyDev.Dapper
 {
     public interface IDapperProxy
     {
-        void AddExecute(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null);
+        IDbConnection GetDbConnection(bool master = false);
+        void AddCommand(string sql, object param = null);
         Task<bool> CommitAsync();
 
         Task<int> ExecuteAsync(string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<T> ExecuteScalarAsync<T>(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<IEnumerable<T>> QueryAsync<T>(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<T> QueryFirstOrDefaultAsync<T>(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<T> QueryFirstAsync<T>(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<T> QuerySingleAsync<T>(
 
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<T> QuerySingleOrDefaultAsync<T>(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
 
         Task<SqlMapper.GridReader> QueryMultipleAsync(
             string sql,
-            object param = null,
-            IDbTransaction transaction = null,
-            int? commandTimeout = null,
-            CommandType? commandType = null);
+            object param = null);
     }
 }

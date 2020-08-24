@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using lazyDev.Dapper;
 using lazyDev.Dapper.MySql;
+using LazyDev.Dapper.PostgreSql;
 
 namespace SampleWeb
 {
@@ -26,16 +27,9 @@ namespace SampleWeb
                     c.RegisterServiceFromAssemblies(Assembly.GetExecutingAssembly());
                     c.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly());
                 });
+ 
+            services.AddDapper<MySqlDbConnectionFactory>(Configuration.GetSection("db"));
 
-            services.AddDapper(x =>
-            {
-                x.SetDbFactory<MySqlDbConnectionFactory>();
-                x.MasterConn = "Server=106.75.10.95;Port=13306;Database=pay;User ID=root;Password=_sys31UC;";
-                x.ReplicasConn = new[]
-                {
-                    "Server=106.75.10.95;Port=13306;Database=pay;User ID=root;Password=_sys31UC;"
-                };
-            });
             services.AddSwaggerDocument();
             services.AddHttpClient();
         }
