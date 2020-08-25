@@ -106,8 +106,9 @@ namespace lazyDev.Dapper
                         {
                             await func(conn, tran);
                         }
+                        tran.Commit();
                     }
-
+                    
                 }
 
                 return _commands.Count;
