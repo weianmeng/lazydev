@@ -39,6 +39,7 @@ namespace LazyDev.Test
                   Age = 18,
                   Name = "Ð¡ºì"
                 },tran));
+
             var commandCount = await proxy.CommitAsync();
             Assert.Equal(1, commandCount);
 
