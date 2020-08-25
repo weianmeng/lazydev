@@ -114,7 +114,7 @@ namespace lazyDev.Dapper
             }
             catch (Exception e)
             {
-                _logger.LogError(e,"事务提交失败");
+                _logger.LogError("事务提交失败",e);
                 throw;
             }
             finally
