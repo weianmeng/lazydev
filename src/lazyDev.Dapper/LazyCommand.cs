@@ -93,7 +93,7 @@ namespace lazyDev.Dapper
         public override CommandType CommandType { get=>_dbCommand.CommandType; set=>_dbCommand.CommandType=value; }
         public override UpdateRowSource UpdatedRowSource { get=>_dbCommand.UpdatedRowSource; set=>_dbCommand.UpdatedRowSource=value; }
         protected override DbConnection DbConnection { get=>_dbCommand.Connection; set=>_dbCommand.Connection=value; }
-        protected override DbParameterCollection DbParameterCollection { get=>_dbCommand.Parameters; }
+        protected override DbParameterCollection DbParameterCollection => _dbCommand.Parameters;
         protected override DbTransaction DbTransaction { get=>_dbCommand.Transaction; set=>_dbCommand.Transaction=value; }
         public override bool DesignTimeVisible { get=>_dbCommand.DesignTimeVisible; set=>_dbCommand.DesignTimeVisible=value; }
 
