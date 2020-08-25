@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using lazyDev.Dapper;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -11,9 +12,10 @@ namespace LazyDev.Test
 
 
         [Fact]
-        public void TestFactoryTestConnection()
+        public async Task TestFactoryTestConnection()
         {
             var services = new ServiceCollection();
+            services.AddLogging();
             services.AddDapper(x =>
             {
                 x.ConnectionFunc = conn => new NpgsqlConnection(conn);
@@ -26,6 +28,9 @@ namespace LazyDev.Test
             Assert.NotNull(connFactory);
             var dbConnection = connFactory.GetDbConnection();
             Assert.NotNull(dbConnection);
+            var proxy = serviceProvider.GetService<IDapperProxy>();
+            var id = await proxy.QueryFirstOrDefaultAsync<string>("select id from student");
+            Assert.NotEmpty(id);
 
         }
     }

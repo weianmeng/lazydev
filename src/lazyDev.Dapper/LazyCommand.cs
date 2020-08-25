@@ -133,8 +133,9 @@ namespace lazyDev.Dapper
         {
             var parameters = _dbCommand.Parameters.Cast<DbParameter>().ToList();
 
-            return parameters.ToDictionary(k => k.ParameterName, v => v.Value);
-
+            return parameters.Any() 
+                ? parameters.ToDictionary(k => k.ParameterName, v => v.Value)
+                : null;
         }
         protected override void Dispose(bool disposing)
         {

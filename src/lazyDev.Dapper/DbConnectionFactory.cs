@@ -26,7 +26,7 @@ namespace lazyDev.Dapper
             }
 
             //没有从库
-            if (_option.ReplicasConn.Length == 0)
+            if (_option.ReplicasConn==null || _option.ReplicasConn.Length == 0)
             {
 
                 return new LazyConnection(_func(_option.MasterConn), _logger);
