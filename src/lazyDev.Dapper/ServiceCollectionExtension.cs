@@ -24,6 +24,7 @@ namespace lazyDev.Dapper
                     dbConfig.ConnectionFunc,
                     c.GetService<ILogger<IDbConnectionFactory>>()));
 
+            services.AddScoped<IDapperProxy, DapperProxy>();
             return services;
         }
         public class DbBuilderOption
