@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace lazyDev.Dapper
 {
-    public class DapperProxy
+    public class DapperProxy : IDapperProxy
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly ILogger<DapperProxy> _logger;
