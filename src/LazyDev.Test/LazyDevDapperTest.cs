@@ -11,7 +11,7 @@ namespace LazyDev.Test
 
 
         [Fact]
-        public void Test1()
+        public void TestFactoryTestConnection()
         {
             var services = new ServiceCollection();
             services.AddDapper(x =>
