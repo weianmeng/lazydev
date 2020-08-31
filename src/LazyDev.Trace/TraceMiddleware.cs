@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace LazyDev.Trace
 {
@@ -26,12 +26,20 @@ namespace LazyDev.Trace
             //设置头部信息 链路ID, 父亲追踪ParentTraceId,当前TraceId
             BuildHeader(context);
             var requestBodyString = await FormatRequestAsync(context.Request);
+
+            var originalBody = context.Response.Body;
+
+            using var currentBody = new MemoryStream();
+            context.Response.Body = currentBody;
             //读取请求信息
             await _next(context);
+
             //读取响应信息
+            var (responseString, statusCode) = await FormatResponseAsync(context.Response);
+            await currentBody.CopyToAsync(originalBody);
 
             //写入日志
-           _logger.LogTrace(LogLevel.Information,new TraceMessage()
+            _logger.LogTrace(LogLevel.Information,new TraceMessage()
            {
                Request = new Request()
                {
@@ -42,7 +50,8 @@ namespace LazyDev.Trace
                },
                Response = new Response()
                {
-
+                   Body = responseString,
+                   StatusCode = statusCode
                },
                TimeSpan = sw.ElapsedMilliseconds
            });
@@ -90,17 +99,31 @@ namespace LazyDev.Trace
 
                 request.EnableBuffering();
 
-                using (var reader = new StreamReader(request.Body, Encoding.UTF8, false, 1024, true))
-                {
-                    var requestBody = await reader.ReadToEndAsync();
-                    request.Body.Position = 0;
-                    return requestBody;
-                }
-
+                using var reader = new StreamReader(request.Body, Encoding.UTF8, false, 1024, true);
+                var requestBody = await reader.ReadToEndAsync();
+                request.Body.Position = 0;
+                return requestBody;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "获取Request Body 错误");
+                throw;
+            }
+        }
+
+        private async Task<(string responseString, int statusCode)> FormatResponseAsync(HttpResponse response)
+        {
+            try
+            {
+                
+                response.Body.Seek(0, SeekOrigin.Begin);
+                var responseString = await new StreamReader(response.Body).ReadToEndAsync();
+                response.Body.Seek(0, SeekOrigin.Begin);
+                return (responseString, response.StatusCode);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "获取Response Body 错误");
                 throw;
             }
         }
