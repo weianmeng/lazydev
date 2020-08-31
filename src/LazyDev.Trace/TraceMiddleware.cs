@@ -9,7 +9,6 @@ namespace LazyDev.Trace
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<TraceMiddleware> _logger;
-
         public TraceMiddleware(RequestDelegate next, ILogger<TraceMiddleware> logger)
         {
             _next = next;
@@ -20,7 +19,10 @@ namespace LazyDev.Trace
             var sw = new Stopwatch();
             sw.Start();
             await _next(context);
-            _logger.LogInformation($"耗时：{sw.ElapsedMilliseconds}");
+           _logger.LogTrace(LogLevel.Information,new TraceMessage()
+           {
+               TimeSpan = sw.ElapsedMilliseconds
+           });
         }
     }
 }

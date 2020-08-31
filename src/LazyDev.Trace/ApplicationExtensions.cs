@@ -2,7 +2,7 @@
 
 namespace LazyDev.Trace
 {
-    public static class ApplicationBuilderExtension
+    public static class ApplicationExtensions
     {
         public static IApplicationBuilder UserTrace(this IApplicationBuilder builder)
         {
