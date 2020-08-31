@@ -50,7 +50,7 @@ namespace lazyDev.Dapper
             }
             finally
             {
-                _logger.LogInformation("打开连接{ConnectionString}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
+                _logger.LogInformation("打开连接{conn}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
             }
             
         }
@@ -64,7 +64,7 @@ namespace lazyDev.Dapper
             }
             finally
             {
-                _logger.LogInformation("打开连接{ConnectionString}，耗时：{ElapsedMilliseconds}", ConnectionString,sw.ElapsedMilliseconds);
+                _logger.LogInformation("打开连接{conn}，耗时：{ElapsedMilliseconds}", ConnectionString,sw.ElapsedMilliseconds);
             }
          
         }
