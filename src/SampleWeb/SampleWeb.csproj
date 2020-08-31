@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LazyDev.AspNetCore\LazyDev.AspNetCore.csproj" />
     <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
+    <ProjectReference Include="..\LazyDev.Log\LazyDev.Log.csproj" />
     <ProjectReference Include="..\LazyDev.Trace\LazyDev.Trace.csproj" />
     <ProjectReference Include="..\LazyDev.Utilities\LazyDev.Utilities.csproj" />
   </ItemGroup>

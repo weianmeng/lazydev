@@ -1,5 +1,7 @@
+using LazyDev.Log;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace SampleWeb
 {
@@ -12,6 +14,11 @@ namespace SampleWeb
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((context, logging) =>
+                {
+                    logging.ClearProviders();
+                    logging.AddLayDevLogging(context.Configuration);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

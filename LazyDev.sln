@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lazyDev.Dapper", "src\lazyD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyDev.Test", "src\LazyDev.Test\LazyDev.Test.csproj", "{346BE550-B2D9-4F4D-82F1-641C4E3853C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyDev.Trace", "src\LazyDev.Trace\LazyDev.Trace.csproj", "{0A89D0C8-96EE-4ECA-ACEF-93190F5B9B99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyDev.Trace", "src\LazyDev.Trace\LazyDev.Trace.csproj", "{0A89D0C8-96EE-4ECA-ACEF-93190F5B9B99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyDev.Log", "src\LazyDev.Log\LazyDev.Log.csproj", "{0BDC4BD1-C657-475E-9D2D-0DB7A73BC0B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0A89D0C8-96EE-4ECA-ACEF-93190F5B9B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A89D0C8-96EE-4ECA-ACEF-93190F5B9B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A89D0C8-96EE-4ECA-ACEF-93190F5B9B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDC4BD1-C657-475E-9D2D-0DB7A73BC0B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDC4BD1-C657-475E-9D2D-0DB7A73BC0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDC4BD1-C657-475E-9D2D-0DB7A73BC0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDC4BD1-C657-475E-9D2D-0DB7A73BC0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
