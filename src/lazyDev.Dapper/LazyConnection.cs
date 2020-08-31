@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,17 +29,44 @@ namespace lazyDev.Dapper
 
         public override void Close()
         {
-            _dbConnection.Close();
+            var sw = Stopwatch.StartNew();
+            try
+            {
+                _dbConnection.Close();
+            }
+            finally
+            {
+                _logger.LogInformation("关闭连接{ConnectionString}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
+            }
+          
         }
 
         public override void Open()
         {
-            _dbConnection.Open();
+            var sw = Stopwatch.StartNew();
+            try
+            {
+                _dbConnection.Open();
+            }
+            finally
+            {
+                _logger.LogInformation("打开连接{ConnectionString}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
+            }
+            
         }
 
         public override Task OpenAsync(CancellationToken cancellationToken)
         {
-            return _dbConnection.OpenAsync(cancellationToken);
+            var sw = Stopwatch.StartNew();
+            try
+            {
+                return _dbConnection.OpenAsync(cancellationToken);
+            }
+            finally
+            {
+                _logger.LogInformation("打开连接{ConnectionString}，耗时：{ElapsedMilliseconds}", ConnectionString,sw.ElapsedMilliseconds);
+            }
+         
         }
 
         public override string ConnectionString { get=> _dbConnection.ConnectionString; set=> _dbConnection.ConnectionString=value; }

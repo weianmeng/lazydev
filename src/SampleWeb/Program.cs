@@ -17,7 +17,7 @@ namespace SampleWeb
                 .ConfigureLogging((context, logging) =>
                 {
                     logging.ClearProviders();
-                    logging.AddLayDevLogging(context.Configuration);
+                    logging.AddConsole();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
