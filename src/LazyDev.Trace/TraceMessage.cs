@@ -9,7 +9,4 @@
         public long TimeSpan { get; set; }
     }
 
-
-
-
 }
