@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using System.Reflection;
-using LazyDev.Trace;
+using LazyDev.Log.Trace;
 
 namespace SampleWeb
 {

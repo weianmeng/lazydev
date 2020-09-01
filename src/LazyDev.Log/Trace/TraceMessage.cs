@@ -1,4 +1,4 @@
-﻿namespace LazyDev.Trace
+﻿namespace LazyDev.Log.Trace
 {
     internal class TraceMessage
     {
@@ -7,6 +7,7 @@
         public Response Response { get; set; }
 
         public long TimeSpan { get; set; }
+
     }
 
 }

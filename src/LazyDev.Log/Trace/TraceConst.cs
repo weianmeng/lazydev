@@ -1,4 +1,4 @@
-﻿namespace LazyDev.Trace
+﻿namespace LazyDev.Log.Trace
 {
     public class TraceConst
     {

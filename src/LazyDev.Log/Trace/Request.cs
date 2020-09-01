@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LazyDev.Trace
+namespace LazyDev.Log.Trace
 {
     internal class Request
     {

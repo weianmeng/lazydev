@@ -15,6 +15,15 @@ namespace LazyDev.Log
             _config = config;
         }
 
+        /// <summary>
+        /// 写日志
+        /// </summary>
+        /// <typeparam name="TState"></typeparam>
+        /// <param name="logLevel"></param>
+        /// <param name="eventId"></param>
+        /// <param name="state"></param>
+        /// <param name="exception"></param>
+        /// <param name="formatter"></param>
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             if (!IsEnabled(logLevel))
@@ -37,7 +46,12 @@ namespace LazyDev.Log
             return null;
             //throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 控制台日志输出
+        /// </summary>
+        /// <typeparam name="TState"></typeparam>
+        /// <param name="logLevel"></param>
+        /// <param name="state"></param>
         private static void ConsoleWrite<TState>(LogLevel logLevel, TState state)
         {
             ConsoleColors consoleColors;

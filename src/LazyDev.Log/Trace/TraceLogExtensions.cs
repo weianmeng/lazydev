@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
+using Microsoft.Extensions.Logging;
 
-namespace LazyDev.Trace
+namespace LazyDev.Log.Trace
 {
     public static class TraceLogExtensions
     {

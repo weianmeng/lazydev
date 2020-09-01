@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace LazyDev.Trace
+namespace LazyDev.Log.Trace
 {
     public static class ApplicationExtensions
     {
