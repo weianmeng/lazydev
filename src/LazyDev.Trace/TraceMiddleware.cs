@@ -39,16 +39,16 @@ namespace LazyDev.Trace
             await currentBody.CopyToAsync(originalBody);
 
             //写入日志
-            _logger.LogTrace(LogLevel.Information,new TraceMessage()
-           {
-               Request = new Request()
+            _logger.LogTrace(LogLevel.Information,new TraceMessage
+            {
+               Request = new Request
                {
                  Path = $"{context.Request.Path}{context.Request.QueryString.Value}",
                  Method = context.Request.Method,
                  Body = requestBodyString?.Length > 4096 ? $"{requestBodyString.Substring(0, 4096)}..." : requestBodyString,
                  Headers = context.Request?.Headers.ToDictionary(s => s.Key, s => string.Join(",", s.Value.ToArray()))
                },
-               Response = new Response()
+               Response = new Response
                {
                    Body = responseString,
                    StatusCode = statusCode
@@ -110,7 +110,11 @@ namespace LazyDev.Trace
                 throw;
             }
         }
-
+        /// <summary>
+        /// 读取响应内容
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private async Task<(string responseString, int statusCode)> FormatResponseAsync(HttpResponse response)
         {
             try
