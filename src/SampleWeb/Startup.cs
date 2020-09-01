@@ -47,7 +47,7 @@ namespace SampleWeb
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
-
+            //╣Всца╢в╥вы
             app.UserTrace();
             app.UseRouting();
 

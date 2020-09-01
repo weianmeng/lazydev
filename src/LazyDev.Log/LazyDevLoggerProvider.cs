@@ -15,7 +15,7 @@ namespace LazyDev.Log
 
         public ILogger CreateLogger(string categoryName)
         {
-            return _loggers.GetOrAdd(categoryName, name => new LazyLogger(_config,name));
+            return _loggers.GetOrAdd(categoryName, name => new LazyLogger(_config));
         }
 
         public void Dispose()
