@@ -14,7 +14,7 @@ namespace SampleWeb.Dal
 
         public void Add(Student student)
         {
-            
+            /////
         }
 
     }
