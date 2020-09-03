@@ -17,6 +17,7 @@ namespace LazyDev.Log
                 IsBackground = true,
                 Name = "logger queue processing thread"
             };
+            _outputThread.Start();
         }
 
         public void Enqueue(LogMessage message)
@@ -35,6 +36,7 @@ namespace LazyDev.Log
                 foreach (var message in _messageQueue.GetConsumingEnumerable())
                 {
                     _writer.Write(message);
+                    _writer.Flush();
                 }
             }
             catch

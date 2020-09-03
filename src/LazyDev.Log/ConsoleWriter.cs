@@ -9,5 +9,10 @@ namespace LazyDev.Log
         {
             Console.Write(logMessage.ToJson());
         }
+
+        public void Flush()
+        {
+           
+        }
     }
 }
