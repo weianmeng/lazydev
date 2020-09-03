@@ -4,17 +4,17 @@ using LazyDev.Utilities;
 
 namespace LazyDev.Log
 {
-    public class LazyLogger:ILogger
+    public class LazyLogger : ILogger
     {
         private readonly string _appId;
         private readonly string _hostIp;
         private readonly string _name;
-        public  bool Console { get; internal set; }
+        public bool Console { get; internal set; }
 
         public Func<string, LogLevel, bool> Filter { get; internal set; }
         private readonly ConsoleWriter _consoleWriter;
 
-        public LazyLogger(string appId,string name,bool console,  Func<string, LogLevel, bool> filter)
+        public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter)
         {
 
             _appId = appId;
@@ -50,7 +50,7 @@ namespace LazyDev.Log
             {
                 baseMessage = new LogMessage()
                 {
-                  Message = state.ToString()
+                    Message = state.ToString()
                 };
             }
             //日志格式化
@@ -60,7 +60,7 @@ namespace LazyDev.Log
             {
                 _consoleWriter.Writer(logLevel, baseMessage);
             }
-           
+
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace LazyDev.Log
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return logLevel != LogLevel.None && Filter(_name,logLevel);
+            return logLevel != LogLevel.None && Filter(_name, logLevel);
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -100,10 +100,10 @@ namespace LazyDev.Log
             {
                 LogLevel.Trace => "trace",
                 LogLevel.Debug => "debug",
-                LogLevel.Information => "info",
+                LogLevel.Information => "information",
                 LogLevel.Warning => "warn",
-                LogLevel.Error => "fail",
-                LogLevel.Critical => "cri",
+                LogLevel.Error => "error",
+                LogLevel.Critical => "critical",
                 LogLevel.None => "none",
                 _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
             };
