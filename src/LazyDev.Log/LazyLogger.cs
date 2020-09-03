@@ -13,7 +13,7 @@ namespace LazyDev.Log
         public bool Console { get; internal set; }
 
         public Func<string, LogLevel, bool> Filter { get; internal set; }
-        private readonly ConsolePrint _consoleWriter;
+        private readonly ConsolePrint _consolePrint;
 
         public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter, ILoggerProcessor loggerProcessor)
         {
@@ -24,7 +24,7 @@ namespace LazyDev.Log
             Console = console;
             _hostIp = NetUtility.GetHostIp();
             Filter = filter ?? ((category, logLevel) => true);
-            _consoleWriter = new ConsolePrint();
+            _consolePrint = new ConsolePrint();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace LazyDev.Log
             _loggerProcessor.Enqueue(baseMessage);
             if (Console)
             {
-                _consoleWriter.Writer(logLevel, baseMessage);
+                _consolePrint.Writer(logLevel, baseMessage);
             }
 
         }
