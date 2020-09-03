@@ -1,6 +1,6 @@
 ﻿namespace LazyDev.Log.Trace
 {
-    internal class TraceMessage
+    internal class TraceMessage:LogMessage
     {
         public Request Request { get; set; }
 

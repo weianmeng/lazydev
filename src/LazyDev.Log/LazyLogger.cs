@@ -41,8 +41,11 @@ namespace LazyDev.Log
                 return;
             }
 
-            if (state is LogMessage baseMessage)
-            {}
+            LogMessage baseMessage;
+            if (state is LogMessage message)
+            {
+                baseMessage = message;
+            }
             else
             {
                 baseMessage = new LogMessage()
