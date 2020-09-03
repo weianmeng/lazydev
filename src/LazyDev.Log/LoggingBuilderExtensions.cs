@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace LazyDev.Log
@@ -8,7 +10,8 @@ namespace LazyDev.Log
 
         public static ILoggingBuilder AddLayDevLogging(this ILoggingBuilder builder, IConfiguration configuration)
         {
-            builder.AddProvider(new LazyDevLoggerProvider());
+            builder.Services.Configure<LazyDevLoggerOptions>(configuration.GetSection("LazyDevLog"));
+             builder.Services.TryAddSingleton<ILoggerProvider,LazyDevLoggerProvider>();
             return builder;
         }
     }

@@ -9,7 +9,7 @@ namespace LazyDev.Log
         private readonly string _appId;
         private readonly string _hostIp;
         private readonly string _name;
-        private readonly bool _console;
+        public  bool Console { get; internal set; }
 
         public Func<string, LogLevel, bool> Filter { get; internal set; }
         private readonly ConsoleWriter _consoleWriter;
@@ -19,7 +19,7 @@ namespace LazyDev.Log
 
             _appId = appId;
             _name = name;
-            _console = console;
+            Console = console;
             _hostIp = NetUtility.GetHostIp();
             Filter = filter ?? ((category, logLevel) => true);
             _consoleWriter = new ConsoleWriter();
@@ -50,7 +50,25 @@ namespace LazyDev.Log
                   Message = state.ToString()
                 };
             }
-            
+            //日志格式化
+            FormatLog(logLevel, eventId, exception, baseMessage);
+
+            if (Console)
+            {
+                _consoleWriter.Writer(logLevel, baseMessage);
+            }
+           
+        }
+
+        /// <summary>
+        ///  格式化日志
+        /// </summary>
+        /// <param name="logLevel"></param>
+        /// <param name="eventId"></param>
+        /// <param name="exception"></param>
+        /// <param name="baseMessage"></param>
+        private void FormatLog(LogLevel logLevel, EventId eventId, Exception exception, LogMessage baseMessage)
+        {
             baseMessage.AppId = _appId;
             baseMessage.LogName = _name;
             baseMessage.HostIp = _hostIp;
@@ -59,15 +77,7 @@ namespace LazyDev.Log
             baseMessage.LogType = eventId.ToString();
             baseMessage.Exception = exception?.ToString();
             baseMessage.LogTime = DateTime.Now;
-
-
-            if (_console)
-            {
-                _consoleWriter.Writer(logLevel, baseMessage);
-            }
-           
         }
-
 
 
         public bool IsEnabled(LogLevel logLevel)
