@@ -10,7 +10,8 @@ namespace LazyDev.Log
 
         public static ILoggingBuilder AddLayDevLogging(this ILoggingBuilder builder, IConfiguration configuration)
         {
-            builder.Services.Configure<LazyDevLoggerOptions>(configuration.GetSection("LazyDevLog"));
+             builder.Services.Configure<LazyDevLoggerOptions>(configuration.GetSection("LazyDevLog"));
+             builder.Services.TryAddSingleton<ILogWriter, ConsoleWriter>();
              builder.Services.TryAddSingleton<ILoggerProvider,LazyDevLoggerProvider>();
             return builder;
         }

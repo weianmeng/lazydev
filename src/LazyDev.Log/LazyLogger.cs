@@ -9,20 +9,22 @@ namespace LazyDev.Log
         private readonly string _appId;
         private readonly string _hostIp;
         private readonly string _name;
+        private readonly ILoggerProcessor _loggerProcessor;
         public bool Console { get; internal set; }
 
         public Func<string, LogLevel, bool> Filter { get; internal set; }
-        private readonly ConsoleWriter _consoleWriter;
+        private readonly ConsolePrint _consoleWriter;
 
-        public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter)
+        public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter, ILoggerProcessor loggerProcessor)
         {
 
             _appId = appId;
             _name = name;
+            _loggerProcessor = loggerProcessor;
             Console = console;
             _hostIp = NetUtility.GetHostIp();
             Filter = filter ?? ((category, logLevel) => true);
-            _consoleWriter = new ConsoleWriter();
+            _consoleWriter = new ConsolePrint();
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace LazyDev.Log
             }
             //日志格式化
             FormatLog(logLevel, eventId, exception, baseMessage);
-
+            _loggerProcessor.Enqueue(baseMessage);
             if (Console)
             {
                 _consoleWriter.Writer(logLevel, baseMessage);

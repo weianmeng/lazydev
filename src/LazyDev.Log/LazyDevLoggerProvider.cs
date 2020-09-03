@@ -9,12 +9,16 @@ namespace LazyDev.Log
     public class LazyDevLoggerProvider : ILoggerProvider
     {
         private readonly IOptionsMonitor<LazyDevLoggerOptions> _optionsMonitor;
+        private readonly ILogWriter _logWriter;
+
+
         private readonly ConcurrentDictionary<string, LazyLogger> _loggers =
             new ConcurrentDictionary<string, LazyLogger>();
 
-        public LazyDevLoggerProvider(IOptionsMonitor<LazyDevLoggerOptions> options)
+        public LazyDevLoggerProvider(IOptionsMonitor<LazyDevLoggerOptions> options,ILogWriter logWriter)
         {
             _optionsMonitor = options;
+            _logWriter = logWriter;
             ReloadOption(options.CurrentValue);
             //配置文件发生变动
            options.OnChange(ReloadOption);
@@ -38,7 +42,9 @@ namespace LazyDev.Log
                 new LazyLogger(_optionsMonitor.CurrentValue.AppId,
                     name,
                     _optionsMonitor.CurrentValue.Console,
-                    LogLevelFilter(name,_optionsMonitor.CurrentValue)));
+                    LogLevelFilter(name,_optionsMonitor.CurrentValue),
+                    new LoggerProcessor(_logWriter,_optionsMonitor.CurrentValue.MaxQueuedMessageCount))
+            );
         }
 
         private Func<string, LogLevel, bool> LogLevelFilter(string name,LazyDevLoggerOptions options)
