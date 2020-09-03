@@ -1,18 +1,28 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using LazyDev.Utilities.Extensions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using LazyDev.Utilities;
 
 namespace LazyDev.Log
 {
     public class LazyLogger:ILogger
     {
-        private readonly LazyDevLoggerConfiguration _config;
+        private readonly string _appId;
+        private readonly string _hostIp;
+        private readonly string _name;
+        private readonly bool _console;
 
-        public LazyLogger(LazyDevLoggerConfiguration config)
+        public Func<string, LogLevel, bool> Filter { get; internal set; }
+        private readonly ConsoleWriter _consoleWriter;
+
+        public LazyLogger(string appId,string name,bool console,  Func<string, LogLevel, bool> filter)
         {
-            _config = config;
+
+            _appId = appId;
+            _name = name;
+            _console = console;
+            _hostIp = NetUtility.GetHostIp();
+            Filter = filter ?? ((category, logLevel) => true);
+            _consoleWriter = new ConsoleWriter();
         }
 
         /// <summary>
@@ -31,14 +41,38 @@ namespace LazyDev.Log
                 return;
             }
 
-            ConsoleWrite(logLevel, state);
+            if (state is LogMessage baseMessage)
+            {}
+            else
+            {
+                baseMessage = new LogMessage()
+                {
+                  Message = state.ToString()
+                };
+            }
+            
+            baseMessage.AppId = _appId;
+            baseMessage.LogName = _name;
+            baseMessage.HostIp = _hostIp;
+            baseMessage.LogLevel = GetLogLevelString(logLevel);
+            baseMessage.EventId = eventId.Id;
+            baseMessage.LogType = eventId.ToString();
+            baseMessage.Exception = exception?.ToString();
+            baseMessage.LogTime = DateTime.Now;
+
+
+            if (_console)
+            {
+                _consoleWriter.Writer(logLevel, baseMessage);
+            }
+           
         }
 
 
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return logLevel == _config.LogLevel;
+            return logLevel != LogLevel.None && Filter(_name,logLevel);
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -46,60 +80,20 @@ namespace LazyDev.Log
             return null;
             //throw new NotImplementedException();
         }
-        /// <summary>
-        /// 控制台日志输出
-        /// </summary>
-        /// <typeparam name="TState"></typeparam>
-        /// <param name="logLevel"></param>
-        /// <param name="state"></param>
-        private static void ConsoleWrite<TState>(LogLevel logLevel, TState state)
+
+        private static string GetLogLevelString(LogLevel logLevel)
         {
-            ConsoleColors consoleColors;
-            switch (logLevel)
+            return logLevel switch
             {
-                case LogLevel.Critical:
-                    consoleColors = new ConsoleColors(ConsoleColor.White, ConsoleColor.Red);
-                    break;
-                case LogLevel.Error:
-                    consoleColors = new ConsoleColors(ConsoleColor.Black, ConsoleColor.Red);
-                    break;
-                case LogLevel.Warning:
-                    consoleColors = new ConsoleColors(ConsoleColor.Yellow, ConsoleColor.Black);
-                    break;
-                case LogLevel.Information:
-                    consoleColors = new ConsoleColors(ConsoleColor.DarkGreen, ConsoleColor.Black);
-                    break;
-                case LogLevel.Debug:
-                    consoleColors = new ConsoleColors(ConsoleColor.Gray, ConsoleColor.Black);
-                    break;
-                case LogLevel.Trace:
-                    consoleColors = new ConsoleColors(ConsoleColor.Gray, ConsoleColor.Black);
-                    break;
-                default:
-                    consoleColors = new ConsoleColors(ConsoleColor.DarkGreen, ConsoleColor.Black);
-                    break;
-            }
-
-            Console.BackgroundColor = consoleColors.Background;
-            Console.ForegroundColor = consoleColors.Foreground;
-            Console.WriteLine("===================================================================================");
-            var jsonFormatted = JToken.Parse(state.ToJson()).ToString(Formatting.Indented);
-            Console.WriteLine(jsonFormatted);
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write("");
-        }
-        private readonly struct ConsoleColors
-        {
-            public ConsoleColors(ConsoleColor foreground, ConsoleColor background)
-            {
-                Foreground = foreground;
-                Background = background;
-            }
-
-            public ConsoleColor Foreground { get; }
-
-            public ConsoleColor Background { get; }
+                LogLevel.Trace => "trace",
+                LogLevel.Debug => "debug",
+                LogLevel.Information => "info",
+                LogLevel.Warning => "warn",
+                LogLevel.Error => "fail",
+                LogLevel.Critical => "cri",
+                LogLevel.None => "none",
+                _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
+            };
         }
     }
 }

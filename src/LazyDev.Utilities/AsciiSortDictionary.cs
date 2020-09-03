@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LazyDev.Utilities.Extensions
+namespace LazyDev.Utilities
 {
     public class AsciiSortDictionary<TValue>:SortedDictionary<string, TValue>
     {
