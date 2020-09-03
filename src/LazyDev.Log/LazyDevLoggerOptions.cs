@@ -16,7 +16,7 @@ namespace LazyDev.Log
         /// <summary>
         /// 本地缓冲队列值
         /// </summary>
-        public int MaxQueuedMessageCount { get; set; } = 10240;
+        public int MaxQueuedMessageCount { get; set; } = 100000;
         /// <summary>
         /// 本地日志目录
         /// </summary>
