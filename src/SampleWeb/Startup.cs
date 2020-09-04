@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using System.Reflection;
+using LazyDev.Log.Trace;
 
 namespace SampleWeb
 {
@@ -46,6 +47,8 @@ namespace SampleWeb
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
+            //µ÷ÓÃÁ´×·×Ù
+            app.UserTrace();
             app.UseRouting();
 
             app.UseAuthorization();
