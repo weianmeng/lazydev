@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LazyDev.Log.Trace;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace LazyDev.Log
         {
              builder.Services.Configure<LazyDevLoggerOptions>(configuration.GetSection("LazyDevLog"));
              builder.Services.TryAddSingleton<ILogWriter, ConsoleWriter>();
+             builder.Services.TryAddSingleton<ITraceSession,DefaultTraceSession>();
              builder.Services.TryAddSingleton<ILoggerProvider,LazyDevLoggerProvider>();
             return builder;
         }

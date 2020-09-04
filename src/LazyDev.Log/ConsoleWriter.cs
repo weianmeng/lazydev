@@ -7,7 +7,7 @@ namespace LazyDev.Log
     {
         public void Write(LogMessage logMessage)
         {
-            Console.Write(logMessage.ToJson());
+            Console.WriteLine(logMessage.ToJson());
         }
 
         public void Flush()

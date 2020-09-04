@@ -46,10 +46,5 @@ namespace LazyDev.Log
             public ConsoleColor Foreground { get; }
             public ConsoleColor Background { get; }
         }
-
-        public void Write(LogMessage logMessage)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

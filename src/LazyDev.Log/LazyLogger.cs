@@ -9,17 +9,19 @@ namespace LazyDev.Log
         private readonly string _appId;
         private readonly string _hostIp;
         private readonly string _name;
+        private readonly ITraceSession _traceSession;
         private readonly ILoggerProcessor _loggerProcessor;
         public bool Console { get; internal set; }
 
         public Func<string, LogLevel, bool> Filter { get; internal set; }
         private readonly ConsolePrint _consolePrint;
 
-        public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter, ILoggerProcessor loggerProcessor)
+        public LazyLogger(string appId, string name, bool console, Func<string, LogLevel, bool> filter, ITraceSession traceSession, ILoggerProcessor loggerProcessor)
         {
 
             _appId = appId;
             _name = name;
+            _traceSession = traceSession;
             _loggerProcessor = loggerProcessor;
             Console = console;
             _hostIp = NetUtility.GetHostIp();
@@ -55,9 +57,11 @@ namespace LazyDev.Log
                     Message = state.ToString()
                 };
             }
-            //日志格式化
-            FormatLog(logLevel, eventId, exception, baseMessage);
+            //补齐日志信息
+            AppendLogMessage(logLevel, eventId, exception, baseMessage);
+            //日志投入内存队列处理
             _loggerProcessor.Enqueue(baseMessage);
+            //是否控制台打印
             if (Console)
             {
                 _consolePrint.Writer(logLevel, baseMessage);
@@ -66,13 +70,13 @@ namespace LazyDev.Log
         }
 
         /// <summary>
-        ///  格式化日志
+        ///  补齐日志信息
         /// </summary>
         /// <param name="logLevel"></param>
         /// <param name="eventId"></param>
         /// <param name="exception"></param>
         /// <param name="baseMessage"></param>
-        private void FormatLog(LogLevel logLevel, EventId eventId, Exception exception, LogMessage baseMessage)
+        private void AppendLogMessage(LogLevel logLevel, EventId eventId, Exception exception, LogMessage baseMessage)
         {
             baseMessage.AppId = _appId;
             baseMessage.LogName = _name;
@@ -82,6 +86,9 @@ namespace LazyDev.Log
             baseMessage.LogType = eventId.ToString();
             baseMessage.Exception = exception?.ToString();
             baseMessage.LogTime = DateTime.Now;
+            baseMessage.TraceId = _traceSession.TraceId;
+            baseMessage.ChainId = _traceSession.ChainId;
+            baseMessage.ParentTraceId = _traceSession.ParentTraceId;
         }
 
 

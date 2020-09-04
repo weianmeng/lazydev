@@ -10,15 +10,20 @@ namespace LazyDev.Log
     {
         private readonly IOptionsMonitor<LazyDevLoggerOptions> _optionsMonitor;
         private readonly ILogWriter _logWriter;
+        private readonly ITraceSession _traceSession;
 
 
         private readonly ConcurrentDictionary<string, LazyLogger> _loggers =
             new ConcurrentDictionary<string, LazyLogger>();
 
-        public LazyDevLoggerProvider(IOptionsMonitor<LazyDevLoggerOptions> options,ILogWriter logWriter)
+        public LazyDevLoggerProvider(
+            IOptionsMonitor<LazyDevLoggerOptions> options,
+            ILogWriter logWriter,
+            ITraceSession traceSession)
         {
             _optionsMonitor = options;
             _logWriter = logWriter;
+            _traceSession = traceSession;
             ReloadOption(options.CurrentValue);
             //配置文件发生变动
            options.OnChange(ReloadOption);
@@ -43,6 +48,7 @@ namespace LazyDev.Log
                     name,
                     _optionsMonitor.CurrentValue.Console,
                     LogLevelFilter(name,_optionsMonitor.CurrentValue),
+                    _traceSession,
                     new LoggerProcessor(_logWriter,_optionsMonitor.CurrentValue.MaxQueuedMessageCount))
             );
         }
