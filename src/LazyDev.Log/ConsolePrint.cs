@@ -1,7 +1,6 @@
 ﻿using LazyDev.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Text.Json;
 namespace LazyDev.Log
 {
     public class ConsolePrint
@@ -23,16 +22,10 @@ namespace LazyDev.Log
                 LogLevel.Trace => new ConsoleColors(ConsoleColor.Gray, ConsoleColor.Black),
                 _ => new ConsoleColors(ConsoleColor.DarkGreen, ConsoleColor.Black)
             };
-
             Console.BackgroundColor = consoleColors.Background;
             Console.ForegroundColor = consoleColors.Foreground;
             Console.WriteLine("===================================================================================");
-            var jsonFormatted = JsonSerializer.Serialize(message, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-            //var jsonFormatted = JToken.Parse(message.ToJson()).ToString(Formatting.Indented);
-            Console.WriteLine(jsonFormatted);
+            Console.WriteLine(message.ToIndentedJson());
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write("");
