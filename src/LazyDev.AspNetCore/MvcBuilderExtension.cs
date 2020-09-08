@@ -1,13 +1,12 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace LazyDev.AspNetCore
 {
@@ -36,11 +35,16 @@ namespace LazyDev.AspNetCore
             //使用 NewtonsoftJson
             if (options.UseNewtonsoftJson)
             {
-                builder.AddNewtonsoftJson(c =>
+                builder.AddJsonOptions(c=> 
                 {
-                    c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    c.JsonSerializerOptions.IgnoreNullValues = true;
+                    c.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 });
+                //builder.AddNewtonsoftJson(c =>
+                //{
+                //    c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                //    c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                //});
             }
 
             //验证返回统一的格式

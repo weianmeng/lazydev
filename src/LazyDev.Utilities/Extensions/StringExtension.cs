@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace LazyDev.Utilities.Extensions
 {
+
     public static class StringExtension
     {
         /// <summary>
@@ -12,7 +13,7 @@ namespace LazyDev.Utilities.Extensions
         /// <returns></returns>
         public static T ToObject<T>(this string str)
         {
-            return string.IsNullOrEmpty(str) ? default : JsonConvert.DeserializeObject<T>(str);
+            return string.IsNullOrEmpty(str) ? default : JsonSerializer.Deserialize<T>(str);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace LazyDev.Utilities.Extensions
 {
@@ -6,7 +6,7 @@ namespace LazyDev.Utilities.Extensions
     {
         public static string ToJson(this object obj)
         {
-            return obj == null ? string.Empty : JsonConvert.SerializeObject(obj);
+            return obj == null ? string.Empty : JsonSerializer.Serialize(obj);
         }
     }
 }

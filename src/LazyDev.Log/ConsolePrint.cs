@@ -1,9 +1,7 @@
-﻿using System;
-using LazyDev.Utilities.Extensions;
+﻿using LazyDev.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
+using System;
+using System.Text.Json;
 namespace LazyDev.Log
 {
     public class ConsolePrint
@@ -29,7 +27,11 @@ namespace LazyDev.Log
             Console.BackgroundColor = consoleColors.Background;
             Console.ForegroundColor = consoleColors.Foreground;
             Console.WriteLine("===================================================================================");
-            var jsonFormatted = JToken.Parse(message.ToJson()).ToString(Formatting.Indented);
+            var jsonFormatted = JsonSerializer.Serialize(message, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+            //var jsonFormatted = JToken.Parse(message.ToJson()).ToString(Formatting.Indented);
             Console.WriteLine(jsonFormatted);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
