@@ -1,4 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
+using LazyDev.Utilities.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -32,19 +33,16 @@ namespace LazyDev.AspNetCore
                 builder.AddFluentValidation(c =>
                     c.RegisterValidatorsFromAssemblies(options.FluentValidationAssemblies));
             }
-            //使用 NewtonsoftJson
+            //使用使用内置json   
             if (options.UseNewtonsoftJson)
             {
                 builder.AddJsonOptions(c=> 
                 {
+                    c.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                    c.JsonSerializerOptions.Converters.Add(new DateTimeNullableConverter());
                     c.JsonSerializerOptions.IgnoreNullValues = true;
                     c.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 });
-                //builder.AddNewtonsoftJson(c =>
-                //{
-                //    c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                //    c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                //});
             }
 
             //验证返回统一的格式

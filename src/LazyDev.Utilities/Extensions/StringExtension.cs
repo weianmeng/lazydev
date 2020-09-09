@@ -1,10 +1,12 @@
-﻿using System.Text.Json;
+﻿using LazyDev.Utilities.Json;
+using System.Text.Json;
 
 namespace LazyDev.Utilities.Extensions
 {
 
     public static class StringExtension
     {
+
         /// <summary>
         /// 字符串反序列化
         /// </summary>
@@ -13,7 +15,11 @@ namespace LazyDev.Utilities.Extensions
         /// <returns></returns>
         public static T ToObject<T>(this string str)
         {
-            return string.IsNullOrEmpty(str) ? default : JsonSerializer.Deserialize<T>(str);
+            var serializerOptions = new JsonSerializerOptions();
+            serializerOptions.Converters.Add(new DateTimeConverter());
+            serializerOptions.Converters.Add(new DateTimeNullableConverter());
+
+            return string.IsNullOrEmpty(str) ? default : JsonSerializer.Deserialize<T>(str, serializerOptions);
         }
 
         /// <summary>

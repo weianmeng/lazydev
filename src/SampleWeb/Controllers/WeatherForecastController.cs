@@ -67,9 +67,9 @@ namespace SampleWeb.Controllers
         }
 
         [HttpPost("addstudent")]
-        public string AddStudent(AddStudentRequest student)
+        public IActionResult AddStudent(AddStudentRequest student)
         {
-            return "";
+            return Ok(new { createTime = DateTime.Now });
         }
         [HttpGet("HiTeacher")]
         public string HiTeacher()
