@@ -4,18 +4,17 @@ namespace LazyDev.AspNetCore
 {
     public class LazyDevAspNetCoreOptions
     {
-        public bool UseNewtonsoftJson { get; set; } = true;
+        public bool UseDefaultJsonOptions { get; set; } = true;
 
         internal Assembly[] ServiceAssemblies { get; set; }
         internal Assembly[] FluentValidationAssemblies { get; set; }
-        internal bool UseFluentValidation { get; set; }
 
-        public void RegisterValidatorsFromAssemblies(params Assembly[] assemblies)
+
+        public void RegisterFluentValidation(params Assembly[] assemblies)
         {
-            UseFluentValidation = true;
             FluentValidationAssemblies = assemblies;
         }
-        public void RegisterServiceFromAssemblies(params Assembly[] assemblies)
+        public void RegisterComponents(params Assembly[] assemblies)
         {
             ServiceAssemblies = assemblies;
         }

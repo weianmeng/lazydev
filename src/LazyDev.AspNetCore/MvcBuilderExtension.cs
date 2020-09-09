@@ -27,14 +27,17 @@ namespace LazyDev.AspNetCore
                 mvcOptions.Filters.Add<LazyResultFilter>();
                 mvcOptions.Filters.Add<LazyDevExceptionFilter>();
             });
+
             //使用FluentValidation
-            if (options.UseFluentValidation)
+            if (options.FluentValidationAssemblies != null 
+                && options.FluentValidationAssemblies.Any())
             {
                 builder.AddFluentValidation(c =>
                     c.RegisterValidatorsFromAssemblies(options.FluentValidationAssemblies));
             }
+
             //使用使用内置json   
-            if (options.UseNewtonsoftJson)
+            if (options.UseDefaultJsonOptions)
             {
                 builder.AddJsonOptions(c=> 
                 {
