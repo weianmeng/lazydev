@@ -17,6 +17,10 @@ namespace lazyDev.Dapper
             _dbConnection = dbConnection;
             _logger = logger;
         }
+        internal DbConnection GetRealDbConnection()
+        {
+            return _dbConnection;
+        }
         protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
         {
             return _dbConnection.BeginTransaction(isolationLevel);
@@ -50,21 +54,21 @@ namespace lazyDev.Dapper
             }
             finally
             {
-                _logger.LogInformation("打开连接{conn}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
+                _logger.LogInformation("打开连接 Open {conn}，耗时：{ElapsedMilliseconds}", ConnectionString, sw.ElapsedMilliseconds);
             }
             
         }
 
-        public override Task OpenAsync(CancellationToken cancellationToken)
+        public override async Task OpenAsync(CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                return _dbConnection.OpenAsync(cancellationToken);
+                await _dbConnection.OpenAsync(cancellationToken);
             }
             finally
             {
-                _logger.LogInformation("打开连接{conn}，耗时：{ElapsedMilliseconds}", ConnectionString,sw.ElapsedMilliseconds);
+                _logger.LogInformation("打开连接 OpenAsync {conn}，耗时：{ElapsedMilliseconds}", ConnectionString,sw.ElapsedMilliseconds);
             }
          
         }

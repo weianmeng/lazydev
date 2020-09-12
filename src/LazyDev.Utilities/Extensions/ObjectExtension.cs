@@ -1,41 +1,27 @@
-﻿using LazyDev.Utilities.Json;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
 
 namespace LazyDev.Utilities.Extensions
 {
     public static class ObjectExtension
     {
-        public static string ToJson(this object obj, JsonSerializerOptions options = null)
+        public static string ToJson(this object obj)
         {
-            if (options == null)
-            {
-                options = new JsonSerializerOptions();
-                options.Converters.Add(new DateTimeConverter());
-                options.Converters.Add(new DateTimeNullableConverter());
-                options.WriteIndented = true;
-            }
 
-            return obj == null ? string.Empty : JsonSerializer.Serialize(obj, options);
+            return obj == null ? string.Empty : JsonConvert.SerializeObject(obj);
         }
 
-        
 
         /// <summary>
         /// 转为格式化的json
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static string ToIndentedJson(this object obj,JsonSerializerOptions options =null)
+        public static string ToIndentedJson(this object obj)
         {
-            if (options == null)
+            return obj == null ? string.Empty : JsonConvert.SerializeObject(obj,new JsonSerializerSettings()
             {
-                options = new JsonSerializerOptions();
-                options.Converters.Add(new DateTimeConverter());
-                options.Converters.Add(new DateTimeNullableConverter());
-                options.WriteIndented = true;
-            }
-
-            return obj == null ? string.Empty : JsonSerializer.Serialize(obj, options);
+                Formatting = Formatting.Indented
+            });
         }
     }
 }

@@ -60,7 +60,7 @@ namespace LazyDev.Log
             //补齐日志信息
             AppendLogMessage(logLevel, eventId, exception, baseMessage);
             //日志投入内存队列处理
-            _loggerProcessor.Enqueue(baseMessage);
+            //_loggerProcessor.Enqueue(baseMessage);
             //是否控制台打印
             if (Console)
             {

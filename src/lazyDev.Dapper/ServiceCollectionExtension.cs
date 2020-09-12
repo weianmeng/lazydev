@@ -13,20 +13,21 @@ namespace lazyDev.Dapper
 
             var dbConfig = new DbBuilderOption();
             dbAction(dbConfig);
-
+            //注册连接工厂
             services.TryAddSingleton<IDbConnectionFactory>(c =>
                 new DbConnectionFactory(
-                    new ConnectionOption()
+                    new ConnectionOption
                     {
                         MasterConn = dbConfig.MasterConn,
                         ReplicasConn = dbConfig.ReplicasConn
                     },
                     dbConfig.ConnectionFunc,
                     c.GetService<ILogger<IDbConnectionFactory>>()));
-
+            //注册dapper 访问代理
             services.AddScoped<IDapperProxy, DapperProxy>();
             return services;
         }
+
         public class DbBuilderOption
         {
             public Func<string, DbConnection> ConnectionFunc { get; set; }

@@ -1,13 +1,13 @@
 ﻿using FluentValidation.AspNetCore;
-using LazyDev.Utilities.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 
 namespace LazyDev.AspNetCore
 {
@@ -39,12 +39,11 @@ namespace LazyDev.AspNetCore
             //使用使用内置json   
             if (options.UseDefaultJsonOptions)
             {
-                builder.AddJsonOptions(c=> 
+                builder.AddNewtonsoftJson(c =>
                 {
-                    c.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
-                    c.JsonSerializerOptions.Converters.Add(new DateTimeNullableConverter());
-                    c.JsonSerializerOptions.IgnoreNullValues = true;
-                    c.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    c.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 });
             }
 

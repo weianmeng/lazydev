@@ -1,13 +1,15 @@
 using lazyDev.Dapper;
 using LazyDev.AspNetCore;
+using LazyDev.Log.Trace;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using Sample.Core.Repositories;
+using Sample.Infrastructure;
 using System.Reflection;
-using LazyDev.Log.Trace;
 
 namespace SampleWeb
 {
@@ -31,9 +33,10 @@ namespace SampleWeb
             services.AddDapper(x =>
             {
                 x.ConnectionFunc = conn => new NpgsqlConnection(conn);
-                x.MasterConn = "";
+                x.MasterConn = "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456";
             });
 
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddSwaggerDocument();
             services.AddHttpClient();
         }

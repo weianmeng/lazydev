@@ -1,5 +1,4 @@
-﻿using LazyDev.Utilities.Json;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
 
 namespace LazyDev.Utilities.Extensions
 {
@@ -15,11 +14,7 @@ namespace LazyDev.Utilities.Extensions
         /// <returns></returns>
         public static T ToObject<T>(this string str)
         {
-            var serializerOptions = new JsonSerializerOptions();
-            serializerOptions.Converters.Add(new DateTimeConverter());
-            serializerOptions.Converters.Add(new DateTimeNullableConverter());
-
-            return string.IsNullOrEmpty(str) ? default : JsonSerializer.Deserialize<T>(str, serializerOptions);
+            return string.IsNullOrEmpty(str) ? default : JsonConvert.DeserializeObject<T>(str);
         }
 
         /// <summary>
