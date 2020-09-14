@@ -18,12 +18,12 @@ namespace Sample.Infrastructure
 
         public async Task<AppUser> GetAppUserById(int id)
         {
-           return await _dapperProxy.QueryFirstAsync<AppUser>("select id,name from app_user where id=@id", new {id});
+           return await _dapperProxy.QueryFirstOrDefaultAsync<AppUser>("select id,mobile from app_member where id=@id", new {id});
         }
 
         public async Task<int> UpdateName(AppUser appUser)
         {
-          return  await _dapperProxy.ExecuteAsync("update user set name=@name where id", new {name = appUser.Name});
+          return  await _dapperProxy.ExecuteAsync("update user set name=@name where id", new {name = appUser.Mobile});
         }
     }
 }
