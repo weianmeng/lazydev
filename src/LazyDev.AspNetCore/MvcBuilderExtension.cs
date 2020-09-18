@@ -90,7 +90,7 @@ namespace LazyDev.AspNetCore
         private static void ScanRegisterService(IMvcBuilder mvcBuilder, Assembly[] scanAssemblies)
         {
             var registerComponents = new List<ServiceAttribute>();
-            var components = AssemblyScan.FindComponentsInAssemblies(scanAssemblies);
+            var components = AssemblyScan.FindServiceInAssemblies(scanAssemblies);
             foreach (var component in components)
             {
                 if (component.ServiceType == null)
