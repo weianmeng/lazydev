@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>lazyDev.Dapper</Product>
+    <Description>数据访问</Description>
+    <PackageId>lazyDev.Dapper</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>数据访问</PackageReleaseNotes>
+    <Version>0.0.1</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <FileVersion>0.0.1</FileVersion>
+    <Company>lazyDev.Dapper</Company>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <Authors>lazyDev.Dapper</Authors>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace LazyDev.AspNetCore
     /// </summary>
     public class AssemblyScan
     {
-        public static IEnumerable<ServiceAttribute> FindComponentsInAssemblies(params Assembly[] assemblies)
+        public static IEnumerable<ServiceAttribute> FindServiceInAssemblies(params Assembly[] assemblies)
         {
             var scanComponents = new List<ServiceAttribute>();
             var types = assemblies.SelectMany(x => x.GetExportedTypes().Where(t => t.IsClass && !t.IsGenericType && !t.IsAbstract).Distinct());

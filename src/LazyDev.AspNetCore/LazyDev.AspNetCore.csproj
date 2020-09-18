@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Product>LazyDev.AspNetCore</Product>
+    <Description>验证 注册集成</Description>
+    <PackageId>LazyDev.AspNetCore</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>验证 注册集成</PackageReleaseNotes>
+    <Version>0.0.1</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <FileVersion>0.0.1</FileVersion>
+    <Company>LazyDev.AspNetCore</Company>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <Authors>LazyDev.AspNetCore</Authors>
   </PropertyGroup>
 
   <ItemGroup>

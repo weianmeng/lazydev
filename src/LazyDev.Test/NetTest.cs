@@ -10,6 +10,8 @@ namespace LazyDev.Test
         {
           var ip=  NetUtility.GetHostIp();
           Assert.NotEmpty(ip);
+
+
         }
     }
 }
