@@ -4,6 +4,6 @@ namespace Sample.Core.Services
 {
     public interface  IUserService
     {
-  
+        Task Update();
     }
 }

@@ -2,6 +2,7 @@
 using Sample.Core.Entities;
 using Sample.Core.Repositories;
 using System.Threading.Tasks;
+using Sample.Core.Services;
 
 namespace SampleWeb.Controllers
 {
@@ -11,13 +12,20 @@ namespace SampleWeb.Controllers
     {
         private readonly IUserRepository _userRepository;
 
-        public UserController(IUserRepository userRepository)
+        private readonly IUserService _userService;
+        public UserController(IUserRepository userRepository, IUserService userService)
         {
             _userRepository = userRepository;
+            _userService = userService;
         }
         public async Task<AppUser> GetInfo(int id)
         {
            return await _userRepository.GetAppUserById(id);
+        }
+        [HttpGet("update")]
+        public async Task Update()
+        {
+           await _userService.Update();
         }
     }
 }

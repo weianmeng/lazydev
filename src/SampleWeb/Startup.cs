@@ -10,6 +10,7 @@ using Npgsql;
 using Sample.Core.Repositories;
 using Sample.Infrastructure;
 using System.Reflection;
+using Sample.Core.Services;
 
 namespace SampleWeb
 {
@@ -39,7 +40,7 @@ namespace SampleWeb
                     "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456"
                 };
             });
-
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddSwaggerDocument();
             services.AddHttpClient();

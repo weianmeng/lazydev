@@ -1,18 +1,25 @@
-﻿using Sample.Core.Repositories;
+﻿using System.Threading.Tasks;
+using lazyDev.Dapper;
+using Sample.Core.Entities;
+using Sample.Core.Repositories;
 
 namespace Sample.Core.Services
 {
     public class UserService :IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public void Update()
+
+        public async Task Update()
         {
+            var userRepository = _unitOfWork.Repository<IUserRepository>();
+            await userRepository.UpdateName(new AppUser());
+            await _unitOfWork.CommitAsync();
             //_userRepository.UpdateName();
         }
     }

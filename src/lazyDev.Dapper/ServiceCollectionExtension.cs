@@ -25,6 +25,7 @@ namespace lazyDev.Dapper
                     c.GetService<ILogger<IDbConnectionFactory>>()));
             //注册dapper 访问代理
             services.AddScoped<IDapperProxy, DapperProxy>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 

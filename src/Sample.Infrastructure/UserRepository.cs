@@ -6,7 +6,7 @@ using Sample.Core.Repositories;
 
 namespace Sample.Infrastructure
 {
-
+     
     public class UserRepository:IUserRepository
     {
         private readonly IDapperProxy _dapperProxy;
