@@ -1,3 +1,4 @@
+using System;
 using lazyDev.Dapper;
 using LazyDev.AspNetCore;
 using LazyDev.Log.Trace;
@@ -26,14 +27,18 @@ namespace SampleWeb
             services.AddControllers()
                 .AddLazyDev(c =>
                 {
-                    c.RegisterComponents(Assembly.GetExecutingAssembly());
-                    c.RegisterFluentValidation(Assembly.GetExecutingAssembly());
+                    c.RegisterServices(Assembly.GetExecutingAssembly());
+                    c.RegisterValidations(Assembly.GetExecutingAssembly());
                 });
-
             services.AddDapper(x =>
             {
                 x.ConnectionFunc = conn => new NpgsqlConnection(conn);
                 x.MasterConn = "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456";
+                x.ReplicasConn = new[]
+                {
+                    "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456",
+                    "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456"
+                };
             });
 
             services.AddScoped<IUserRepository, UserRepository>();

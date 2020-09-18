@@ -1,21 +1,26 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using Npgsql;
 using Dapper;
 using LazyDev.Utilities.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace LazyDev.Log.Postgres
 {
     public class PostgresLogWriter: ILogWriter
     {
-        private string conStr = "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456";
-
+        private readonly IOptions<PostgresLogOption> _options;
+        public PostgresLogWriter(IOptions<PostgresLogOption> options)
+        {
+            _options = options;
+        }
         public async Task Write(LogMessage logMessage)
         {
             using (var conn = GetDbConnection())
             {
                 await conn.ExecuteAsync(
-                    $"insert into log_message(message) values ('{logMessage.ToJson()}')");
+                    $"insert into app_logs(message,created_time) values ('{logMessage.ToJson()}','{logMessage.LogTime}')");
             }
         }
 
@@ -26,7 +31,7 @@ namespace LazyDev.Log.Postgres
 
         private IDbConnection GetDbConnection()
         {
-            return  new NpgsqlConnection(conStr);
+            return  new NpgsqlConnection(_options.Value.LogDb);
         }
     }
 }
