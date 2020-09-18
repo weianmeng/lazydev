@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SampleWeb.Service
 {
-    [Component]
+    [Service]
     public class StudentService : IStudentService
     {
 

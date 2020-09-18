@@ -10,11 +10,11 @@ namespace LazyDev.AspNetCore
         internal Assembly[] FluentValidationAssemblies { get; set; }
 
 
-        public void RegisterFluentValidation(params Assembly[] assemblies)
+        public void RegisterValidations(params Assembly[] assemblies)
         {
             FluentValidationAssemblies = assemblies;
         }
-        public void RegisterComponents(params Assembly[] assemblies)
+        public void RegisterServices(params Assembly[] assemblies)
         {
             ServiceAssemblies = assemblies;
         }

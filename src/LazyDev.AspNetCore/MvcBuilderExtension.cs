@@ -89,7 +89,7 @@ namespace LazyDev.AspNetCore
         /// <param name="scanAssemblies"></param>
         private static void ScanRegisterService(IMvcBuilder mvcBuilder, Assembly[] scanAssemblies)
         {
-            var registerComponents = new List<ComponentAttribute>();
+            var registerComponents = new List<ServiceAttribute>();
             var components = AssemblyScan.FindComponentsInAssemblies(scanAssemblies);
             foreach (var component in components)
             {
@@ -99,7 +99,7 @@ namespace LazyDev.AspNetCore
 
                     registerComponents.AddRange(from service in serviceTypes
                         where !service.IsGenericType
-                        select new ComponentAttribute
+                        select new ServiceAttribute
                             {LifeCycle = component.LifeCycle, ServiceType = service, ImplType = component.ImplType});
                 }
                 else
