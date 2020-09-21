@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace LazyDev.AspNetCore
+namespace LazyDev.Assemblies
 {
     /// <summary>
     /// 程序集扫描

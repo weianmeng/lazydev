@@ -60,28 +60,28 @@ namespace lazyDev.Dapper
 
         #region Execute
 
-        private async Task<T> ProxyExecuteAsync<T>(Func<IDbConnection, Task<T>> func)
-        {
-            using (var conn = _dbConnectionFactory.GetDbConnection())
-            {
+        //private async Task<T> ProxyExecuteAsync<T>(Func<IDbConnection, Task<T>> func)
+        //{
+        //    using (var conn = _dbConnectionFactory.GetDbConnection())
+        //    {
               
-                return await func(conn);
-            }
-        }
+        //        return await func(conn);
+        //    }
+        //}
 
-        public async Task<int> ExecuteAsync(string sql, object param = null)
-        {
-            return await ProxyExecuteAsync(conn => conn.ExecuteAsync(sql, param));
-        }
+        //public async Task<int> ExecuteAsync(string sql, object param = null)
+        //{
+        //    return await ProxyExecuteAsync(conn => conn.ExecuteAsync(sql, param));
+        //}
 
-        public async Task<T> ExecuteScalarAsync<T>(string sql, object param = null)
-        {
-            return await ProxyQueryAsync(conn => conn.ExecuteScalarAsync<T>(sql, param));
-        }
-        public async Task<IDataReader> ExecuteReaderAsync(string sql, object param = null)
-        {
-            return await ProxyQueryAsync(conn => conn.ExecuteReaderAsync(sql, param));
-        }
+        //public async Task<T> ExecuteScalarAsync<T>(string sql, object param = null)
+        //{
+        //    return await ProxyQueryAsync(conn => conn.ExecuteScalarAsync<T>(sql, param));
+        //}
+        //public async Task<IDataReader> ExecuteReaderAsync(string sql, object param = null)
+        //{
+        //    return await ProxyQueryAsync(conn => conn.ExecuteReaderAsync(sql, param));
+        //}
 
         //事务
         public void AddCommand(Func<IDbConnection, IDbTransaction, Task> func)

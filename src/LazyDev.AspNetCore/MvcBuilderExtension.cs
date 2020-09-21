@@ -1,13 +1,12 @@
 ﻿using FluentValidation.AspNetCore;
+using LazyDev.Assemblies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace LazyDev.AspNetCore
 {
@@ -51,7 +50,8 @@ namespace LazyDev.AspNetCore
             InvalidReturnGlobalResult(mvcBuilder);
 
             //扫描注册服务
-            ScanRegisterService(mvcBuilder,options.ServiceAssemblies);
+            mvcBuilder.Services.Register(options.ServiceAssemblies);
+
             return mvcBuilder;
         }
 
@@ -82,36 +82,5 @@ namespace LazyDev.AspNetCore
             });
         }
 
-        /// <summary>
-        /// 扫描注册服务(注意：不支持通用泛型服务注册,通用泛型服务请手动注册)
-        /// </summary>
-        /// <param name="mvcBuilder"></param>
-        /// <param name="scanAssemblies"></param>
-        private static void ScanRegisterService(IMvcBuilder mvcBuilder, Assembly[] scanAssemblies)
-        {
-            var registerComponents = new List<ServiceAttribute>();
-            var components = AssemblyScan.FindServiceInAssemblies(scanAssemblies);
-            foreach (var component in components)
-            {
-                if (component.ServiceType == null)
-                {
-                    var serviceTypes = component.ImplType.GetInterfaces();
-
-                    registerComponents.AddRange(from service in serviceTypes
-                        where !service.IsGenericType
-                        select new ServiceAttribute
-                            {LifeCycle = component.LifeCycle, ServiceType = service, ImplType = component.ImplType});
-                }
-                else
-                {
-                    registerComponents.Add(component);
-                }
-
-            }
-            registerComponents.ForEach(component =>
-            {
-                mvcBuilder.Services.TryAdd(new ServiceDescriptor(component.ServiceType, component.ImplType, component.LifeCycle));
-            });
-        }
     }
 }

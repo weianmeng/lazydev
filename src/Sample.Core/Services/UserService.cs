@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using lazyDev.Dapper;
 using Sample.Core.Entities;
-using Sample.Core.Repositories;
+using Sample.Core.Services;
+using Sample.Services.Repositories;
 
-namespace Sample.Core.Services
+namespace Sample.Services.Services
 {
     public class UserService :IUserService
     {
@@ -18,7 +19,7 @@ namespace Sample.Core.Services
         public async Task Update()
         {
             var userRepository = _unitOfWork.Repository<IUserRepository>();
-            await userRepository.UpdateName(new AppUser());
+             userRepository.UpdateName(new AppUser());
             await _unitOfWork.CommitAsync();
             //_userRepository.UpdateName();
         }

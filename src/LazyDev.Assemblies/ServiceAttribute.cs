@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace LazyDev.AspNetCore
+namespace LazyDev.Assemblies
 {
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]

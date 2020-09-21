@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Dapper;
 using lazyDev.Dapper;
 using Sample.Core.Entities;
-using Sample.Core.Repositories;
+using Sample.Services.Repositories;
 
-
-namespace Sample.Infrastructure
+namespace Sample.Dal
 {
      
     public class UserRepository:IUserRepository
@@ -21,9 +21,10 @@ namespace Sample.Infrastructure
            return await _dapperProxy.QueryFirstOrDefaultAsync<AppUser>("select id,mobile from app_member where id=@id", new {id});
         }
 
-        public async Task<int> UpdateName(AppUser appUser)
+        public void  UpdateName(AppUser appUser)
         {
-          return  await _dapperProxy.ExecuteAsync("update user set name=@name where id", new {name = appUser.Mobile});
+            _dapperProxy.AddCommand((c, t) =>
+                c.ExecuteAsync("update user set name=@name where id", new {name = appUser.Mobile}, t));
         }
     }
 }

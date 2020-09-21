@@ -1,6 +1,7 @@
 ﻿using LazyDev.AspNetCore;
 using System;
 using System.Threading.Tasks;
+using LazyDev.Assemblies;
 
 namespace SampleWeb.Service
 {

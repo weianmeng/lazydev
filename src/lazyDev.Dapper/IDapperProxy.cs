@@ -16,9 +16,9 @@ namespace lazyDev.Dapper
         Task<T> QuerySingleAsync<T>(string sql, object param = null);
         Task<T> QuerySingleOrDefaultAsync<T>(string sql, object param = null);
         Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, object param = null);
-        Task<int> ExecuteAsync(string sql, object param = null);
-        Task<T> ExecuteScalarAsync<T>(string sql, object param = null);
-        Task<IDataReader> ExecuteReaderAsync(string sql, object param = null);
+        //Task<int> ExecuteAsync(string sql, object param = null);
+        //Task<T> ExecuteScalarAsync<T>(string sql, object param = null);
+        //Task<IDataReader> ExecuteReaderAsync(string sql, object param = null);
         void AddCommand(Func<IDbConnection, IDbTransaction, Task> func);
         Task<int> CommitAsync();
     }
