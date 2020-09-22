@@ -20,7 +20,7 @@ namespace SampleWeb.Service
         public Student GetNameException()
         {
          
-            throw  new LazyDevException("获取姓名失败","404");
+            throw  new LazyDevException("获取姓名失败",404);
         }
     }
 }

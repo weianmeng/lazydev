@@ -16,7 +16,7 @@ namespace LazyDev.AspNetCore
                 {
                   return;  
                 }
-                context.Result = new ObjectResult(new LazyResult{Success = true,Data = objectResult.Value});
+                context.Result = new ObjectResult(LazyResult<object>.Success(objectResult.Value));
             }
         }
 

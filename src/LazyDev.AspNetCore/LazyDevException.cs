@@ -8,14 +8,14 @@ namespace LazyDev.AspNetCore
     /// </summary>
     public class LazyDevException : Exception
     {
-        public string Code { get; set; }
+        public int Code { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="code"></param>
-        public LazyDevException(string message, string code = "400")
+        public LazyDevException(string message, int code = 400)
             : base(message)
         {
             Code = code;
@@ -27,7 +27,7 @@ namespace LazyDev.AspNetCore
         /// <param name="message"></param>
         /// <param name="code"></param>
         /// <param name="innerException"></param>
-        public LazyDevException(string message, Exception innerException, string code = "400")
+        public LazyDevException(string message, Exception innerException, int code = 400)
             : base(message, innerException)
         {
             Code = code;

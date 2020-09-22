@@ -27,8 +27,7 @@ namespace SampleWeb
             services.AddControllers()
                 .AddLazyDev(c =>
                 {
-                    c.RegisterServices(Assembly.GetExecutingAssembly());
-                    c.RegisterValidations(Assembly.GetExecutingAssembly());
+                    c.ConventionRegisterEndWith=new[]{"",""};
                 });
             services.AddDapper(x =>
             {

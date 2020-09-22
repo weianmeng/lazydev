@@ -7,11 +7,10 @@ namespace LazyDev.AspNetCore
     /// </summary>
     public interface ILazyResult
     {
-        public bool Success { get; set; }
-        string Code { get; set; }
+        public bool IsSuccess { get; }
+        int Code { get; set; }
         string Msg { get; set; }
         IDictionary<string, string> MsgDetail { get; set; }
-        object Data { get; set; }
     }
 
 

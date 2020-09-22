@@ -27,30 +27,25 @@ namespace LazyDev.AspNetCore
                 mvcOptions.Filters.Add<LazyDevExceptionFilter>();
             });
 
+            var allAssemblyFinder = new AppDomainAllAssemblyFinder();
+            var assemblies = allAssemblyFinder.GetAllAssemblies();
             //使用FluentValidation
-            if (options.FluentValidationAssemblies != null 
-                && options.FluentValidationAssemblies.Any())
-            {
-                builder.AddFluentValidation(c =>
-                    c.RegisterValidatorsFromAssemblies(options.FluentValidationAssemblies));
-            }
+            builder.AddFluentValidation(c =>
+                c.RegisterValidatorsFromAssemblies(assemblies));
 
-            //使用使用内置json   
-            if (options.UseDefaultJsonOptions)
+            //使用json   
+            builder.AddNewtonsoftJson(c =>
             {
-                builder.AddNewtonsoftJson(c =>
-                {
-                    c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    c.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                });
-            }
+                c.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                c.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
 
             //验证返回统一的格式
             InvalidReturnGlobalResult(mvcBuilder);
 
             //扫描注册服务
-            mvcBuilder.Services.Register(options.ServiceAssemblies);
+            mvcBuilder.Services.Register(assemblies);
 
             return mvcBuilder;
         }
@@ -66,18 +61,14 @@ namespace LazyDev.AspNetCore
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    var result = new LazyResult
-                    {
-                        Success = false, Code = "400", Msg = "参数验证失败", MsgDetail = new Dictionary<string, string>()
-                    };
+                    var msgDetails = new Dictionary<string, string>();
                     foreach (var key in context.ModelState.Keys)
                     {
                         var state = context.ModelState[key];
                         var errors = string.Join(",", state.Errors.Select(x => x.ErrorMessage).ToList());
-                        result.MsgDetail.Add(key,errors);
+                        msgDetails.Add(key,errors);
                     }
-
-                    return new ObjectResult(result);
+                    return new ObjectResult(LazyResult.Failed(400, "参数验证失败", msgDetails));
                 };
             });
         }

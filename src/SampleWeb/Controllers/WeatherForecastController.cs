@@ -57,7 +57,7 @@ namespace SampleWeb.Controllers
         [HttpGet("Teacher")]
         public ILazyResult Teacher()
         {
-            return new LazyResult {Code = "10000", Data = new Student {Name = "小明"}};
+            return LazyResult<Student>.Success(new Student(){Name = "小明"});
         }
 
         [HttpGet("SysException")]

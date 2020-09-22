@@ -21,8 +21,7 @@ namespace LazyDev.AspNetCore
         {
             if (context.Exception is LazyDevException lazyDevException)
             {
-                context.Result = new ObjectResult(new LazyResult
-                    {Success = false, Code = lazyDevException.Code, Msg = lazyDevException.Message});
+                context.Result = new ObjectResult(LazyResult.Failed(lazyDevException.Code, lazyDevException.Message));
 
                 context.ExceptionHandled = true;
             }
@@ -36,8 +35,8 @@ namespace LazyDev.AspNetCore
                 }
                 else
                 {
-                    context.Result = new ObjectResult(new LazyResult
-                        { Success = false, Code ="500", Msg = context.Exception.Message });
+                    context.Result = new ObjectResult(LazyResult.Failed(500, context.Exception.Message));
+                    context.ExceptionHandled = true;
                 }
             }
         }
