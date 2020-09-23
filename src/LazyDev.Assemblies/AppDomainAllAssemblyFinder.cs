@@ -20,6 +20,11 @@ namespace LazyDev.Assemblies
                 "System",
                 "Microsoft",
                 "Window",
+                "Newtonsoft",
+                "NSwag",
+                "FluentValidation",
+                "K4os",
+                "BouncyCastle",
             };
             var context = DependencyContext.Default;
             if (context == null)
