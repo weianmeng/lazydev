@@ -1,7 +1,7 @@
-﻿using LazyDev.AspNetCore;
+﻿using LazyDev.Core.Dependency;
+using LazyDev.Core.Exception;
 using System;
 using System.Threading.Tasks;
-using LazyDev.Assemblies;
 
 namespace SampleWeb.Service
 {

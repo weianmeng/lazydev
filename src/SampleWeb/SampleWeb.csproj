@@ -14,9 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LazyDev.AspNetCore\LazyDev.AspNetCore.csproj" />
     <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
-    <ProjectReference Include="..\LazyDev.Log.Postgres\LazyDev.Log.Postgres.csproj" />
     <ProjectReference Include="..\LazyDev.Log\LazyDev.Log.csproj" />
-    <ProjectReference Include="..\LazyDev.Utilities\LazyDev.Utilities.csproj" />
     <ProjectReference Include="..\Sample.Core\Sample.Services.csproj" />
     <ProjectReference Include="..\Sample.Infrastructure\Sample.Dal.csproj" />
   </ItemGroup>

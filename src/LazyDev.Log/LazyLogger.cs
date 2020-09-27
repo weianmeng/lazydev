@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using LazyDev.Utilities;
+using LazyDev.Core.Utility;
 
 namespace LazyDev.Log
 {

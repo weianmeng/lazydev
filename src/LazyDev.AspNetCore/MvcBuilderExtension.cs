@@ -1,5 +1,4 @@
 ﻿using FluentValidation.AspNetCore;
-using LazyDev.Assemblies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -7,7 +6,9 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LazyDev.Utilities.Extensions;
+using LazyDev.Core.Common;
+using LazyDev.Core.Dependency;
+using LazyDev.Core.Extensions;
 
 namespace LazyDev.AspNetCore
 {

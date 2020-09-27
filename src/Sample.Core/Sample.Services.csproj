@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LazyDev.Assemblies\LazyDev.Assemblies.csproj" />
     <ProjectReference Include="..\lazyDev.Dapper\lazyDev.Dapper.csproj" />
   </ItemGroup>
 

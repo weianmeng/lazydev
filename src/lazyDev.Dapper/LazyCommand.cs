@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using LazyDev.Utilities.Extensions;
+using LazyDev.Core.Extensions;
 
 namespace lazyDev.Dapper
 {

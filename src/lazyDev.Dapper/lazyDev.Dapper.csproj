@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LazyDev.Utilities\LazyDev.Utilities.csproj" />
+    <ProjectReference Include="..\LazyDev.Core\LazyDev.Core.csproj" />
   </ItemGroup>
 
 </Project>

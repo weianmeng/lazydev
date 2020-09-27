@@ -1,6 +1,6 @@
-﻿using LazyDev.Utilities.Extensions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using LazyDev.Core.Extensions;
 
 namespace LazyDev.Log
 {

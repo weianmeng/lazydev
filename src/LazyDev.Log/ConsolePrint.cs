@@ -1,6 +1,7 @@
-﻿using LazyDev.Utilities.Extensions;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
+using LazyDev.Core.Extensions;
+
 namespace LazyDev.Log
 {
     public class ConsolePrint
