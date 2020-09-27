@@ -1,27 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace lazyDev.Dapper
 {
     public class UnitOfWork:IUnitOfWork
     {
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IDapperProxy _dapper;
+        private readonly IDbContext _dbContext;
 
-        public UnitOfWork(IServiceProvider serviceProvider,IDapperProxy dapper)
+        public UnitOfWork(IDbContext dbContext)
         {
-            _serviceProvider = serviceProvider;
-            _dapper = dapper;
+            _dbContext = dbContext;
         }
-        public T Repository<T>() where T : class, IRepository
-        {
-           return _serviceProvider.GetService<T>();
-        }
-
         public async Task<int> CommitAsync()
         {
-            return await _dapper.CommitAsync();
+           return await _dbContext.CommitAsync();
         }
     }
 }

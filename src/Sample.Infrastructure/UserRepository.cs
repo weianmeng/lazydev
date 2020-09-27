@@ -1,30 +1,36 @@
-﻿using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using lazyDev.Dapper;
-using Sample.Core.Entities;
 using Sample.Services.Repositories;
+using System.Threading.Tasks;
+using Sample.Services.Entities;
 
 namespace Sample.Dal
 {
-     
     public class UserRepository:IUserRepository
     {
-        private readonly IDapperProxy _dapperProxy;
+        private readonly IDbContext _dbContext;
 
-        public UserRepository(IDapperProxy dapperProxy)
+        public UserRepository(IDbContext dbContext)
         {
-            _dapperProxy = dapperProxy;
+            _dbContext = dbContext;
         }
-
-        public async Task<AppUser> GetAppUserById(int id)
+        public async Task<AppUser> GetAsync(int id)
         {
-           return await _dapperProxy.QueryFirstOrDefaultAsync<AppUser>("select id,mobile from app_member where id=@id", new {id});
+            return await _dbContext.QueryAsync(x =>
+                x.QueryFirstOrDefaultAsync<AppUser>("select id,mobile from app_member where id=@id", new {id}));
         }
 
         public void  UpdateName(AppUser appUser)
         {
-            _dapperProxy.AddCommand((c, t) =>
-                c.ExecuteAsync("update user set name=@name where id", new {name = appUser.Mobile}, t));
+            _dbContext.AddCommand((conn, tran) =>
+                conn.ExecuteAsync("update app_member set mobile=@Mobile where id=@Id", appUser, tran));
         }
+
+        public  void Insert(AppUser appUser)
+        {
+            const string insertSql = "insert into app_member(mobile) values (@mobile)";
+            _dbContext.AddCommand((conn, tran) => conn.ExecuteAsync(insertSql, appUser, tran));
+        }
+
     }
 }

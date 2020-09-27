@@ -14,14 +14,11 @@ namespace LazyDev.AspNetCore
 {
     public static class MvcBuilderExtension
     {
-        public static IMvcBuilder AddLazyDev(this IMvcBuilder mvcBuilder,Action<LazyDevAspNetCoreOptions> setupAction)
+        public static IMvcBuilder AddLazyDev(this IMvcBuilder mvcBuilder,Action<LazyDevAspNetCoreOptions> setupAction=null)
         {
-            if (setupAction == null)
-            {
-                throw new ArgumentNullException(nameof(setupAction));
-            }
+
             var options = new LazyDevAspNetCoreOptions();
-            setupAction(options);
+            setupAction?.Invoke(options);
 
             var builder = mvcBuilder.AddMvcOptions(mvcOptions =>
             {
@@ -49,6 +46,8 @@ namespace LazyDev.AspNetCore
             //扫描注册服务
             mvcBuilder.Services.Register(assemblies);
 
+            //Swagger
+            mvcBuilder.Services.AddSwaggerDocument();
             return mvcBuilder;
         }
 

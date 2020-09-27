@@ -7,8 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
-using Sample.Dal;
-using Sample.Services.Repositories;
 
 namespace SampleWeb
 {
@@ -23,10 +21,7 @@ namespace SampleWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddLazyDev(c =>
-                {
-                    c.ConventionRegisterEndWith=new[]{"",""};
-                });
+                .AddLazyDev();
             services.AddDapper(x =>
             {
                 x.ConnectionFunc = conn => new NpgsqlConnection(conn);
@@ -37,8 +32,6 @@ namespace SampleWeb
                     "Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456"
                 };
             });
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddSwaggerDocument();
             services.AddHttpClient();
         }
 
@@ -49,8 +42,8 @@ namespace SampleWeb
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseLazyDev();
+
             //µ÷ÓÃÁ´×·×Ù
             app.UserTrace();
             app.UseRouting();

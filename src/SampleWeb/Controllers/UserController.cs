@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sample.Core.Entities;
 using System.Threading.Tasks;
 using Sample.Core.Services;
+using Sample.Services.Entities;
 using Sample.Services.Repositories;
 
 namespace SampleWeb.Controllers
@@ -20,7 +20,7 @@ namespace SampleWeb.Controllers
         }
         public async Task<AppUser> GetInfo(int id)
         {
-           return await _userRepository.GetAppUserById(id);
+           return await _userRepository.GetAsync(id);
         }
         [HttpGet("update")]
         public async Task Update()
