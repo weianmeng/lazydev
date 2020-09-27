@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LazyDev.AspNetCore
+﻿namespace LazyDev.AspNetCore
 {
     /// <summary>
     /// 返回结果统一格式
@@ -10,7 +8,11 @@ namespace LazyDev.AspNetCore
         public bool IsSuccess { get; }
         int Code { get; set; }
         string Msg { get; set; }
-        IDictionary<string, string> MsgDetail { get; set; }
+    }
+
+    public interface ILazyResult<T> : ILazyResult
+    {
+        public T Data { get; set; }
     }
 
 

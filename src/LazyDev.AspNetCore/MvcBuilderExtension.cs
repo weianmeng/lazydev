@@ -7,6 +7,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LazyDev.Utilities.Extensions;
 
 namespace LazyDev.AspNetCore
 {
@@ -68,7 +69,7 @@ namespace LazyDev.AspNetCore
                         var errors = string.Join(",", state.Errors.Select(x => x.ErrorMessage).ToList());
                         msgDetails.Add(key,errors);
                     }
-                    return new ObjectResult(LazyResult.Failed(400, "参数验证失败", msgDetails));
+                    return new ObjectResult(LazyResult.Failed(400, msgDetails.ToJson()));
                 };
             });
         }
