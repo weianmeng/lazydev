@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Sample.Core.Services;
 using Sample.Services.Entities;
 using Sample.Services.Repositories;
+using Sample.Services.Services;
 
 namespace SampleWeb.Controllers
 {

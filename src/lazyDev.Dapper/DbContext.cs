@@ -58,7 +58,9 @@ namespace lazyDev.Dapper
                     
                 }
 
-                return _commands.Count;
+                var count = _commands.Count;
+                _commands.Clear();
+                return count;
             }
             catch (Exception e)
             {

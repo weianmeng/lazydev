@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\SysInfoApp\Models\RequestModels\" />
-    <Folder Include="Services\SysInfoApp\Models\ViewModels\" />
+    <ProjectReference Include="..\LazyDev.Core\LazyDev.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

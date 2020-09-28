@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Sample.Core.Services
+namespace Sample.Services.Services
 {
     public interface  IUserService
     {
