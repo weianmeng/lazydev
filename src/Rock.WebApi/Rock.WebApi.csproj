@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LazyDev.AspNetCore\LazyDev.AspNetCore.csproj" />
+    <ProjectReference Include="..\Rock.Infrastructure\Rock.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>

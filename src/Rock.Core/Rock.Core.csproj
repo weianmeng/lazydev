@@ -8,8 +8,4 @@
     <ProjectReference Include="..\LazyDev.Core\LazyDev.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
