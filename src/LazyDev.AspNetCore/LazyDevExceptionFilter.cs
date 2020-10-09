@@ -21,7 +21,7 @@ namespace LazyDev.AspNetCore
 
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception is LazyDevException lazyDevException)
+            if (context.Exception is FriendlyException lazyDevException)
             {
                 context.Result = new ObjectResult(LazyResult.Failed(lazyDevException.Code, lazyDevException.Message));
 

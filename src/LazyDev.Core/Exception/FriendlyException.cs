@@ -4,7 +4,7 @@
     /// <summary>
     /// 友好异常
     /// </summary>
-    public class LazyDevException : System.Exception
+    public class FriendlyException : System.Exception
     {
         public int Code { get; set; }
 
@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="message"></param>
         /// <param name="code"></param>
-        public LazyDevException(string message, int code = 400)
+        public FriendlyException(string message, int code = 400)
             : base(message)
         {
             Code = code;
@@ -25,7 +25,7 @@
         /// <param name="message"></param>
         /// <param name="code"></param>
         /// <param name="innerException"></param>
-        public LazyDevException(string message, System.Exception innerException, int code = 400)
+        public FriendlyException(string message, System.Exception innerException, int code = 400)
             : base(message, innerException)
         {
             Code = code;
