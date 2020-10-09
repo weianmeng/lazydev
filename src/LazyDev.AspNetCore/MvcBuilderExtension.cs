@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LazyDev.Core;
 using LazyDev.Core.Common;
 using LazyDev.Core.Dependency;
 using LazyDev.Core.Extensions;
@@ -28,6 +29,10 @@ namespace LazyDev.AspNetCore
 
             var allAssemblyFinder = new AppDomainAllAssemblyFinder();
             var assemblies = allAssemblyFinder.GetAllAssemblies();
+
+            //注册核心
+            LazyDevCore.Initialize(mvcBuilder.Services,allAssemblyFinder);
+
             //使用FluentValidation
             builder.AddFluentValidation(c =>
                 c.RegisterValidatorsFromAssemblies(assemblies));
@@ -42,9 +47,6 @@ namespace LazyDev.AspNetCore
 
             //验证返回统一的格式
             InvalidReturnGlobalResult(mvcBuilder);
-
-            //扫描注册服务
-            mvcBuilder.Services.Register(assemblies);
 
             //Swagger
             mvcBuilder.Services.AddSwaggerDocument();

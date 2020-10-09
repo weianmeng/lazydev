@@ -1,7 +1,7 @@
 ﻿using LazyDev.Core.Common;
-using Rock.Core.Dto.SysInfoApp;
 using Rock.Core.Repositories;
 using System.Threading.Tasks;
+using Rock.Core.SysInfos.Dto;
 
 namespace Rock.Core.SysInfos
 {

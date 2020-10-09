@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rock.WebApi", "src\Rock.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyDev.Core", "src\LazyDev.Core\LazyDev.Core.csproj", "{D86C8602-C607-4E1F-9C27-DA23724BC22D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyDev.EFCore", "src\LazyDev.EFCore\LazyDev.EFCore.csproj", "{C302708C-09E6-4AD6-8D90-487E53799B4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{D86C8602-C607-4E1F-9C27-DA23724BC22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86C8602-C607-4E1F-9C27-DA23724BC22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D86C8602-C607-4E1F-9C27-DA23724BC22D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C302708C-09E6-4AD6-8D90-487E53799B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C302708C-09E6-4AD6-8D90-487E53799B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C302708C-09E6-4AD6-8D90-487E53799B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C302708C-09E6-4AD6-8D90-487E53799B4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{FCDD0B60-233B-487F-939C-E3F6A496F634} = {1572A89F-38AA-4C58-A160-5441A27A3601}
 		{4E78729F-1075-4FEA-9283-C463CA2419E3} = {1572A89F-38AA-4C58-A160-5441A27A3601}
 		{D86C8602-C607-4E1F-9C27-DA23724BC22D} = {9D724CD9-D049-46BD-A385-6D224A89DDC3}
+		{C302708C-09E6-4AD6-8D90-487E53799B4E} = {9D724CD9-D049-46BD-A385-6D224A89DDC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DABBCDCB-BD5A-49E1-B205-F5227FE92F3A}

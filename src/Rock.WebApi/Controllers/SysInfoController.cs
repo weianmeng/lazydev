@@ -1,8 +1,8 @@
 ﻿using LazyDev.Core.Common;
 using Microsoft.AspNetCore.Mvc;
-using Rock.Core.Dto.SysInfoApp;
 using Rock.Core.SysInfos;
 using System.Threading.Tasks;
+using Rock.Core.SysInfos.Dto;
 
 namespace Rock.WebApi.Controllers
 {
@@ -17,6 +17,7 @@ namespace Rock.WebApi.Controllers
             _sysInfoService = sysInfoService;
         }
 
+        [HttpPost]
         public async Task<PageResult<SysInfoOutput>> SysInfo(SysInfoPageInput sysInfoPageInput)
         {
             return await _sysInfoService.GetSysInfos(sysInfoPageInput);

@@ -6,10 +6,15 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace LazyDev.Core.Dependency
 {
-    public class AppDomainAllAssemblyFinder : IAllAssemblyFinder
+    public class AppDomainAllAssemblyFinder : IAssemblyFinder
     {
+        private Assembly[] _assemblies;
         public Assembly[] GetAllAssemblies()
         {
+            if (_assemblies != null)
+            {
+                return _assemblies;
+            }
             string[] filters =
             {
                 "mscorlib",
@@ -66,7 +71,8 @@ namespace LazyDev.Core.Dependency
                     }
                 }
             }
-            return LoadAssemblies(names);
+            _assemblies = LoadAssemblies(names);
+            return _assemblies;
         }
 
         private static Assembly[] LoadAssemblies(IEnumerable<string> files)

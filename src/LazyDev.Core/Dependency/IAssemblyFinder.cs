@@ -2,7 +2,7 @@
 
 namespace LazyDev.Core.Dependency
 {
-    public interface IAllAssemblyFinder
+    public interface IAssemblyFinder
     {
         Assembly[] GetAllAssemblies();
     }

@@ -1,4 +1,6 @@
-﻿namespace LazyDev.Core.Common
+﻿using Newtonsoft.Json;
+
+namespace LazyDev.Core.Common
 {
     public class PageRequest
     {
@@ -12,6 +14,7 @@
         /// </summary>
         public int PageSize { get; set; }
 
+        [JsonIgnore]
         public int Skip => (PageIndex - 1) * PageSize;
 
         public PageRequest()

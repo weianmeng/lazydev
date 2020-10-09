@@ -1,11 +1,11 @@
 ﻿using Dapper;
 using lazyDev.Dapper;
 using LazyDev.Core.Common;
-using Rock.Core.Dto.SysInfoApp;
 using Rock.Core.Entities;
 using Rock.Core.Repositories;
 using System.Linq;
 using System.Threading.Tasks;
+using Rock.Core.SysInfos.Dto;
 
 namespace Rock.Infrastructure
 {
@@ -28,9 +28,10 @@ namespace Rock.Infrastructure
                 x.ExecuteScalarAsync<int>("select count(id) from sys_info"));
 
             var sysInfoOutputs = infos
-                .Select(info => new SysInfoOutput() {Version = info.Version, Remarks = info.Remarks});
+                .Select(info => new SysInfoOutput {Version = info.Version, Remarks = info.Remarks});
 
-            return PageResult<SysInfoOutput>.Page(sysInfoPageInput.PageIndex, sysInfoPageInput.PageSize, count, sysInfoOutputs);
+            return PageResult<SysInfoOutput>.Page(sysInfoPageInput.PageIndex, sysInfoPageInput.PageSize, count,
+                sysInfoOutputs);
         }
     }
 }
