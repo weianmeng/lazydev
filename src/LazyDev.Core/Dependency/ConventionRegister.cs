@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Linq;
 using System.Reflection;
 
 namespace LazyDev.Core.Dependency
@@ -10,10 +9,10 @@ namespace LazyDev.Core.Dependency
         public static void Register(IServiceCollection service, Assembly[] assemblies)
         {   
             //Transient
-            var transientTypes = AssemblyHelper.FindTypes<ITransientDependency>(assemblies);
+            var transientTypes = DependencyTypeHelper.FindDependencyTypes<ITransientDependency>(assemblies);
             foreach (var type in transientTypes)
             {
-                var interfaceTypes = type.GetInterfaces().Where(x => !x.IsGenericType);
+                var interfaceTypes = type.GetInterfaces();
                 foreach (var interfaceType in interfaceTypes)
                 {
                     service.TryAddTransient(interfaceType, type);
@@ -21,20 +20,21 @@ namespace LazyDev.Core.Dependency
             }
 
             //Scoped
-            var scopeTypes = AssemblyHelper.FindTypes<IScopedDependency>(assemblies);
+            var scopeTypes = DependencyTypeHelper.FindDependencyTypes<IScopedDependency>(assemblies);
             foreach (var type in scopeTypes)
             {
-                var interfaceTypes = type.GetInterfaces().Where(x => !x.IsGenericType);
+                var interfaceTypes = type.GetInterfaces();
                 foreach (var interfaceType in interfaceTypes)
                 {
                     service.TryAddScoped(interfaceType, type);
                 }
             }
+
             //Singleton
-            var singletonTypes = AssemblyHelper.FindTypes<IScopedDependency>(assemblies);
+            var singletonTypes = DependencyTypeHelper.FindDependencyTypes<ISingletonDependency>(assemblies);
             foreach (var type in singletonTypes)
             {
-                var interfaceTypes = type.GetInterfaces().Where(x => !x.IsGenericType);
+                var interfaceTypes = type.GetInterfaces();
                 foreach (var interfaceType in interfaceTypes)
                 {
                     service.TryAddSingleton(interfaceType, type);

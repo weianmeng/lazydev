@@ -9,11 +9,12 @@ namespace LazyDev.Core
         {
 
             var assemblies = assemblyFinder.GetAllAssemblies();
-            //约定注册
-            ConventionRegister.Register(services, assemblies);
-            //模块注册
+            //模块注册      高
             ModuleRegister.Register(services, assemblyFinder.GetAllAssemblies());
-            
+            //注解注册      中
+            ComponentRegister.Register(services, assemblies);
+            //约定注册      低
+            ConventionRegister.Register(services, assemblies);
         }     
     }
 }

@@ -4,8 +4,7 @@ namespace LazyDev.Core.Dependency
 {
     public abstract class Module
     {
-        public int Order => -1;
-
+        internal int Order { get; set; }
         public virtual void Register(IServiceCollection services)
         {
 

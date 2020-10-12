@@ -27,7 +27,7 @@ namespace LazyDev.AspNetCore
                 mvcOptions.Filters.Add<LazyDevExceptionFilter>();
             });
 
-            var allAssemblyFinder = new AppDomainAllAssemblyFinder();
+            var allAssemblyFinder = new AllAssemblyFinder();
             var assemblies = allAssemblyFinder.GetAllAssemblies();
 
             //注册核心

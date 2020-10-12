@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace LazyDev.Core.Dependency
 {
-    public class AppDomainAllAssemblyFinder : IAssemblyFinder
+    public class AllAssemblyFinder : IAssemblyFinder
     {
         private Assembly[] _assemblies;
         public Assembly[] GetAllAssemblies()
