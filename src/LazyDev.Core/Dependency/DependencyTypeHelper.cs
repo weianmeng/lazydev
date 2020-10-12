@@ -52,7 +52,6 @@ namespace LazyDev.Core.Dependency
         {
             return assemblies.SelectMany(x => x.GetExportedTypes().Where(t =>
                 typeof(Module).IsAssignableFrom(t)
-                && !t.HasAttribute<IgnoreRegisterAttribute>()
                 && t.IsClass
                 && !t.IsGenericType
                 && !t.IsAbstract));

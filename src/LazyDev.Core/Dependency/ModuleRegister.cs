@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using LazyDev.Core.Extensions;
 
 namespace LazyDev.Core.Dependency
 {
@@ -11,42 +10,65 @@ namespace LazyDev.Core.Dependency
     {
         public static void Register(IServiceCollection service, Assembly[] assemblies)
         {
-            var types = DependencyTypeHelper.FindModuleTypes(assemblies).Distinct().ToArray();
-            var dictionary = new Dictionary<Type,Module>();
+            var types = DependencyTypeHelper.FindModuleTypes(assemblies).ToArray();
+            //排序
+            var moduleInfos = new List<ModuleInfo>();
             //模块依赖排序
             foreach (var type in types)
-            { 
-                if (dictionary.ContainsKey(type))
+            {
+                var module = (Module)Activator.CreateInstance(type);
+                var dependOnModuleTypes = type.GetCustomAttributes<ModuleDependOnAttribute>().Select(x => x.ModuleType)
+                    .ToList();
+                // 根模块
+                if (!dependOnModuleTypes.Any())
+                {   
+                    module.Order = 1;
+                }
+                moduleInfos.Add(new ModuleInfo()
                 {
-                      continue;
-                }
-                var module =  (Module) Activator.CreateInstance(type);
-                dictionary.Add(type, module);
+                    ModuleType = type,
+                    Module = module,
+                    DependOnModuleTypes = dependOnModuleTypes
+                });
             }
 
-            foreach (var keyValuePair in dictionary)
+            var rootModuleInfos = moduleInfos.Where(x => x.Module.Order == 1);
+            foreach (var rootModuleInfo in rootModuleInfos)
             {
-                var type = keyValuePair.Key;
-                var module = keyValuePair.Value;
-                var dependOnAttrs = type.GetAttributes<ModuleDependOnAttribute>();
-
-                foreach (var attr in dependOnAttrs)
-                { 
-                    dictionary[attr.ModuleType].Order = module.Order + 1;
-                }
+                //解决循环依赖
+                rootModuleInfo.Processed = true;
+                OrderModule(rootModuleInfo, moduleInfos);
             }
 
-            var listModules = dictionary.Select(x => x.Value);
-            foreach (var module in listModules.OrderByDescending(x=>x.Order))
+            var modules = moduleInfos.Select(x => x.Module).OrderBy(x => x.Order).ToList();
+            modules.ForEach(x=>x.Register(service));
+        }
+        private static void OrderModule(ModuleInfo parentModuleInfo,List<ModuleInfo> moduleInfos)
+        {
+            foreach (var moduleInfo in moduleInfos)
             {
-                module.Register(service);
+                if (moduleInfo.Processed)
+                {
+                   continue; 
+                }
+                if (!moduleInfo.DependOnModuleTypes.Contains(parentModuleInfo.ModuleType)) continue;
+
+                if (moduleInfo.Module.Order < parentModuleInfo.Module.Order)
+                {
+                    moduleInfo.Module.Order = parentModuleInfo.Module.Order + 1;
+                }
+                moduleInfo.Processed = true;
+                OrderModule(moduleInfo, moduleInfos);
             }
         }
 
-        internal class OrderModule
+
+        public class ModuleInfo
         {
             public Type ModuleType { get; set; }
-            public List<Type> DependOnModuleType { get; set; }
+            public Module Module { get; set; }
+            public bool Processed { get; set; }
+            public List<Type> DependOnModuleTypes { get; set; }
         }
     }
 }

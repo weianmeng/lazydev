@@ -2,7 +2,8 @@
 
 namespace LazyDev.Core
 {
-    public class LazyCoreModule:Module
+    public class LazyCoreModule : Module
     {
+
     }
 }
