@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LazyDev.EFCore.Entities;
-using LazyDev.EFCore.Repositories;
 
 namespace LazyDev.EFCore
 {

@@ -1,7 +1,6 @@
-﻿using System;
-using LazyDev.EFCore.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace LazyDev.EFCore
 {

@@ -1,6 +1,5 @@
-﻿using LazyDev.EFCore.Entities;
-using LazyDev.EFCore.Repositories;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using LazyDev.EFCore.Entities;
 
 namespace LazyDev.EFCore
 {

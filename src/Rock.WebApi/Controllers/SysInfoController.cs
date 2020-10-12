@@ -1,8 +1,9 @@
-﻿using LazyDev.EFCore.Repositories;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Rock.Core.Entities;
 using System.Threading.Tasks;
 using LazyDev.EFCore;
+using Rock.Core.SysInfos;
 using Rock.Core.SysInfos.Dto;
 
 namespace Rock.WebApi.Controllers
@@ -13,24 +14,30 @@ namespace Rock.WebApi.Controllers
     {
         private readonly IRepository<SysInfo> _sysInfoRepository;
         private readonly IUnitOfWork _unitOfWork;
-        public SysInfoController(IRepository<SysInfo> sysInfoRepository, IUnitOfWork unitOfWork)
+        private readonly ISysInfoService _sysInfoService;
+
+        public SysInfoController(IRepository<SysInfo> sysInfoRepository, IUnitOfWork unitOfWork,ISysInfoService sysInfoService)
         {
             _sysInfoRepository = sysInfoRepository;
             _unitOfWork = unitOfWork;
+            _sysInfoService = sysInfoService;
         }
 
-        [HttpGet]
-        public async Task<SysInfo> SysInfo(int id)
-        {
-            return await _sysInfoRepository.FindAsync(id);
-        }
 
-        [HttpPost]
-        public async Task<int> SysInfo(SysInfoAddInput sysInfo)
+
+        [HttpPost("add")]
+        public async Task<int> AddSysInfo(SysInfoAddInput sysInfo)
         {
             await _sysInfoRepository.AddAsync(new SysInfo {Version = sysInfo.Version});
            return  await _unitOfWork.CommitAsync();
 
+        }
+
+
+        [HttpPost("list")]
+        public async Task<List<SysInfo>> SysInfoPage(SysInfoPageInput sysInfoPage)
+        {
+            return await _sysInfoService.GetSysInfos(sysInfoPage);
         }
     }
 }

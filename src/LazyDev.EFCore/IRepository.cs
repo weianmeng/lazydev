@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LazyDev.EFCore.Entities;
 
-namespace LazyDev.EFCore.Repositories
+namespace LazyDev.EFCore
 {
     public interface IRepository<TEntity, in TKey>  where TEntity:class,IEntity<TKey>
     {

@@ -1,13 +1,14 @@
-﻿using LazyDev.Core.Common;
-using System.Threading.Tasks;
-using LazyDev.Core.Dependency;
+﻿using LazyDev.Core.Dependency;
+using Rock.Core.Entities;
 using Rock.Core.SysInfos.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Rock.Core.SysInfos
 {
     public interface ISysInfoService:IScopedDependency
     {
 
-        Task<PageResult<SysInfoOutput>> GetSysInfos(SysInfoPageInput sysInfoPageInput);
+        Task<List<SysInfo>> GetSysInfos(SysInfoPageInput sysInfoPageInput);
     }
 }
