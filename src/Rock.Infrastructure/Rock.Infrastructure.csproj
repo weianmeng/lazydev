@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LazyDev.EFCore\LazyDev.EFCore.csproj" />
     <ProjectReference Include="..\Rock.Core\Rock.Core.csproj" />
   </ItemGroup>

@@ -1,9 +1,12 @@
 using LazyDev.AspNetCore;
+using LazyDev.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Rock.Infrastructure;
 
 namespace Rock.WebApi
 {
@@ -20,6 +23,9 @@ namespace Rock.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddLazyDev();
+            services.AddLazyDevDbContext<RockDbContext>(c =>
+                c.UseNpgsql("Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456"));
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

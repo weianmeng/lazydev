@@ -1,4 +1,4 @@
-﻿namespace LazyDev.Core.Domain.Entities
+﻿namespace LazyDev.EFCore.Entities
 {
     public interface IEntity<T>
     {

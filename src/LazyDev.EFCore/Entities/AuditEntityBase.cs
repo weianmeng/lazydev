@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LazyDev.Core.Domain.Entities
+namespace LazyDev.EFCore.Entities
 {
     public abstract class AuditEntityBase<T>:EntityBase<T>, IAuditEntity<T>
     {

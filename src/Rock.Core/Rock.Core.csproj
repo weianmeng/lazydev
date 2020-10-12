@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LazyDev.Core\LazyDev.Core.csproj" />
+    <ProjectReference Include="..\LazyDev.EFCore\LazyDev.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

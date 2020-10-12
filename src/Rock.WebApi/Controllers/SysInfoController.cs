@@ -1,7 +1,8 @@
-﻿using LazyDev.Core.Common;
+﻿using LazyDev.EFCore.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rock.Core.SysInfos;
+using Rock.Core.Entities;
 using System.Threading.Tasks;
+using LazyDev.EFCore;
 using Rock.Core.SysInfos.Dto;
 
 namespace Rock.WebApi.Controllers
@@ -10,17 +11,26 @@ namespace Rock.WebApi.Controllers
     [ApiController]
     public class SysInfoController : ControllerBase
     {
-        private readonly ISysInfoService _sysInfoService;
-
-        public SysInfoController(ISysInfoService sysInfoService)
+        private readonly IRepository<SysInfo> _sysInfoRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        public SysInfoController(IRepository<SysInfo> sysInfoRepository, IUnitOfWork unitOfWork)
         {
-            _sysInfoService = sysInfoService;
+            _sysInfoRepository = sysInfoRepository;
+            _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet]
+        public async Task<SysInfo> SysInfo(int id)
+        {
+            return await _sysInfoRepository.FindAsync(id);
         }
 
         [HttpPost]
-        public async Task<PageResult<SysInfoOutput>> SysInfo(SysInfoPageInput sysInfoPageInput)
+        public async Task<int> SysInfo(SysInfoAddInput sysInfo)
         {
-            return await _sysInfoService.GetSysInfos(sysInfoPageInput);
+            await _sysInfoRepository.AddAsync(new SysInfo {Version = sysInfo.Version});
+           return  await _unitOfWork.CommitAsync();
+
         }
     }
 }
