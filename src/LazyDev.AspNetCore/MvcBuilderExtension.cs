@@ -1,15 +1,17 @@
 ﻿using FluentValidation.AspNetCore;
+using LazyDev.Core;
+using LazyDev.Core.Common;
+using LazyDev.Core.Dependency;
+using LazyDev.Core.Extensions;
+using LazyDev.Core.Runtime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LazyDev.Core;
-using LazyDev.Core.Common;
-using LazyDev.Core.Dependency;
-using LazyDev.Core.Extensions;
 
 namespace LazyDev.AspNetCore
 {
@@ -32,7 +34,9 @@ namespace LazyDev.AspNetCore
 
             //注册核心
             LazyDevCore.Initialize(mvcBuilder.Services,allAssemblyFinder);
-
+            //注册Session
+            builder.Services.RemoveAll<ILazyDevSession>();
+            builder.Services.AddScoped<ILazyDevSession, AspNetCoreSession>();
             //使用FluentValidation
             builder.AddFluentValidation(c =>
                 c.RegisterValidatorsFromAssemblies(assemblies));

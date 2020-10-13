@@ -1,10 +1,11 @@
-﻿using LazyDev.EFCore;
+﻿using LazyDev.Core.Extensions;
+using LazyDev.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Rock.Core.Entities;
 using Rock.Core.SysInfos.Dto;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using LazyDev.Core.Common;
 
 namespace Rock.Core.SysInfos
 {
@@ -21,12 +22,20 @@ namespace Rock.Core.SysInfos
         {
             var repository = _unitOfWork.Repository<SysInfo>();
             var query = repository.GetQueryable();
-            if (!string.IsNullOrEmpty(sysInfoPageInput.Version))
-            {
-                query = query.Where(x => EF.Functions.Like(x.Version, sysInfoPageInput.Version));
-            }
+            query = query.WhereIf(!string.IsNullOrEmpty(sysInfoPageInput.Version),
+                x => EF.Functions.Like(x.Version, sysInfoPageInput.Version));
+           return await query.PageBy(sysInfoPageInput).ToListAsync();
+        }
 
-            return await query.Skip(sysInfoPageInput.Skip).Take(sysInfoPageInput.PageSize).ToListAsync();
+        public async Task<PageResult<SysInfo>> GetSysInfosNew(SysInfoPageInput sysInfoPageInput)
+        {
+            var repository = _unitOfWork.Repository<SysInfo>();
+            var query = repository.GetQueryable();
+            query = query.WhereIf(!string.IsNullOrEmpty(sysInfoPageInput.Version),
+                x => EF.Functions.Like(x.Version, sysInfoPageInput.Version));
+            var count = await query.CountAsync();
+            var data = await query.PageBy(sysInfoPageInput).ToListAsync();
+            return PageResult<SysInfo>.Page(sysInfoPageInput.PageIndex, sysInfoPageInput.PageSize, count, data);
         }
     }
 }

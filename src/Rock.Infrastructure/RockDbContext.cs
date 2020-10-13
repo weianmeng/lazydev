@@ -1,4 +1,5 @@
-﻿using LazyDev.EFCore;
+﻿using System.Reflection;
+using LazyDev.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Rock.Core.Entities;
 
@@ -10,12 +11,12 @@ namespace Rock.Infrastructure
         {
         }
         public DbSet<SysInfo> SysInfos { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountClaim> AccountClaims { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SysInfo>().ToTable("sys_info");
-            modelBuilder.Entity<SysInfo>().Property(x => x.Id).HasColumnName("id");
-            modelBuilder.Entity<SysInfo>().Property(x => x.Version).HasColumnName("version").HasMaxLength(20);
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
 
 

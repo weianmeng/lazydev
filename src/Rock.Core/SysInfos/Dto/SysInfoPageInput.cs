@@ -2,7 +2,7 @@
 
 namespace Rock.Core.SysInfos.Dto
 {
-    public class SysInfoPageInput:PageRequest
+    public class SysInfoPageInput: PageRequestBase
     {
         public string Version { get; set; }
     }

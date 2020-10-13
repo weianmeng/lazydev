@@ -2,7 +2,7 @@
 
 namespace LazyDev.Core.Common
 {
-    public class PageRequest
+    public class PageRequestBase : IPageRequest
     {
         /// <summary>
         /// 获取或设置 页索引
@@ -17,7 +17,7 @@ namespace LazyDev.Core.Common
         [JsonIgnore]
         public int Skip => (PageIndex - 1) * PageSize;
 
-        public PageRequest()
+        public PageRequestBase()
         {
             PageIndex = 1;
             PageSize = 20;

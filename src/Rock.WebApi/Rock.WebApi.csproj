@@ -9,5 +9,9 @@
     <ProjectReference Include="..\Rock.Infrastructure\Rock.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 
 </Project>

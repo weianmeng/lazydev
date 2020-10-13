@@ -2,8 +2,7 @@
 {
     public class LazyResult:ILazyResult
     {
-        public bool IsSuccess => Code == 0;
-        public int Code { get; set; }
+        public bool IsSucceed { get; set; } = true;
         public string Msg { get; set; }
 
         public static LazyResult Success()
@@ -13,9 +12,15 @@
 
         public static LazyResult Failed(int code,string msg=null)
         {
-            return new LazyResult {Code = code, Msg = msg};
+            return new LazyDevFailedResult { ErrorCode = code, Msg = msg, IsSucceed=false};
         }
     }
+
+    public class LazyDevFailedResult: LazyResult
+    {
+        public int ErrorCode { get; set; }
+    }
+
 
     public class LazyResult<T> : LazyResult, ILazyResult<T>
     {

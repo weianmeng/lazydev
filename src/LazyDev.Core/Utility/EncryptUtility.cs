@@ -3,16 +3,16 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LazyDev.Core.Utility.Security
+namespace LazyDev.Core.Utility
 {
-    public static class Encrypt
+    public static class EncryptUtility
     {
         /// <summary>
         /// md5加密
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string Md5Hash(this string input)
+        public static string Md5(string input)
         {
             using var md5 = MD5.Create();
             var data = md5.ComputeHash(Encoding.UTF8.GetBytes(input));

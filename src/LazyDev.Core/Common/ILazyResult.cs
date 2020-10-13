@@ -5,8 +5,7 @@
     /// </summary>
     public interface ILazyResult
     {
-        public bool IsSuccess { get; }
-        int Code { get; set; }
+        public bool IsSucceed { get; }
         string Msg { get; set; }
     }
 
