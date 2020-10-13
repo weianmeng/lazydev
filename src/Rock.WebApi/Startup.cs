@@ -1,15 +1,13 @@
-using System.Text;
 using LazyDev.AspNetCore;
 using LazyDev.EFCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Rock.Infrastructure;
+using Rock.WebApi.Jwt;
 
 namespace Rock.WebApi
 {
@@ -29,24 +27,7 @@ namespace Rock.WebApi
             services.AddLazyDevDbContext<RockDbContext>(c =>
                 c.UseNpgsql("Host=127.0.0.1;Database=lazy_db;Username=postgres;Password=123456"));
 
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f")),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = "localhost",
-                    ValidAudience = "localhost"
-                };
-            });
+            services.AddJwtAuth(Configuration.GetSection("Jwt"));
 
         }
 

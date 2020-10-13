@@ -1,9 +1,8 @@
-﻿using System.Collections.Concurrent;
+﻿using LazyDev.Core.Exception;
 using LazyDev.Core.Utility;
 using LazyDev.EFCore;
 using Rock.Core.Entities;
 using System.Threading.Tasks;
-using LazyDev.Core.Exception;
 
 namespace Rock.Core.AccountApp
 {
