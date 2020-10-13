@@ -35,8 +35,8 @@ namespace LazyDev.AspNetCore
             //注册核心
             LazyDevCore.Initialize(mvcBuilder.Services,allAssemblyFinder);
             //注册Session
-            builder.Services.RemoveAll<ILazyDevSession>();
-            builder.Services.AddScoped<ILazyDevSession, AspNetCoreSession>();
+            builder.Services.RemoveAll<Core.Runtime.ILazyDevSession>();
+            builder.Services.AddScoped<Core.Runtime.ILazyDevSession, AspNetCoreSession>();
             //使用FluentValidation
             builder.AddFluentValidation(c =>
                 c.RegisterValidatorsFromAssemblies(assemblies));
@@ -75,7 +75,7 @@ namespace LazyDev.AspNetCore
                         var errors = string.Join(",", state.Errors.Select(x => x.ErrorMessage).ToList());
                         msgDetails.Add(key,errors);
                     }
-                    return new ObjectResult(LazyResult.Failed(400, msgDetails.ToJson()));
+                    return new ObjectResult(LazyDevResult.Failed(400, msgDetails.ToJson()));
                 };
             });
         }

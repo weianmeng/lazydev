@@ -1,4 +1,5 @@
-﻿using LazyDev.Core.Utility;
+﻿using System.Collections.Concurrent;
+using LazyDev.Core.Utility;
 using LazyDev.EFCore;
 using Rock.Core.Entities;
 using System.Threading.Tasks;
@@ -13,6 +14,28 @@ namespace Rock.Core.AccountApp
         public AccountService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+
+        public async Task<AccountLoginOutput> LoginAsync(AccountLoginInput loginInput)
+        {
+            var resp = _unitOfWork.Repository<Account>();
+            var account = await resp.FindAsync(x => x.Mobile == loginInput.EmailOrMobile || x.Email == loginInput.EmailOrMobile);
+            if (account == null)
+            {
+                throw new FriendlyException("账号错误!");
+            }
+            var password = EncryptUtility.Md5(loginInput.Password + account.Salt);
+            if (account.Password != password)
+            {
+                throw new FriendlyException("密码错误!");
+            }
+
+            return new AccountLoginOutput
+            {
+                Uid = account.Id,
+                TenantId = 0
+            };
         }
 
         public async Task<AddAccountOutput> AddAsync(AccountInput accountInput)

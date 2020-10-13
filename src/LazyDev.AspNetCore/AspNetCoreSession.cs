@@ -18,7 +18,7 @@ namespace LazyDev.AspNetCore
         public int UId {
             get
             {
-                var claim = _principal?.Claims?.FirstOrDefault(x => x.Type == "uid");
+                var claim = _principal?.Claims?.FirstOrDefault(x => x.Type == LazyDevSessionDefaults.UId);
                 if (claim == null)
                 {
                     return default;
@@ -35,7 +35,7 @@ namespace LazyDev.AspNetCore
         public int TenantId {
             get
             {
-                var claim = _principal?.Claims?.FirstOrDefault(x => x.Type == "tenant_id");
+                var claim = _principal?.Claims?.FirstOrDefault(x => x.Type == LazyDevSessionDefaults.TenantId);
                 if (claim == null)
                 {
                     return default;

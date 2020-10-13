@@ -13,7 +13,7 @@ namespace LazyDev.AspNetCore
         {
             if (context.Result is ObjectResult objectResult)
             {
-                if (objectResult.Value is ILazyResult)
+                if (objectResult.Value is ILazyDevResult)
                 {
                   return;  
                 }

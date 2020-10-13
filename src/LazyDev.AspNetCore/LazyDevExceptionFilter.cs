@@ -23,7 +23,7 @@ namespace LazyDev.AspNetCore
         {
             if (context.Exception is FriendlyException lazyDevException)
             {
-                context.Result = new ObjectResult(LazyResult.Failed(lazyDevException.Code, lazyDevException.Message));
+                context.Result = new ObjectResult(LazyDevResult.Failed(lazyDevException.Code, lazyDevException.Message));
 
                 context.ExceptionHandled = true;
             }
@@ -37,7 +37,7 @@ namespace LazyDev.AspNetCore
                 }
                 else
                 {
-                    context.Result = new ObjectResult(LazyResult.Failed(500, context.Exception.Message));
+                    context.Result = new ObjectResult(LazyDevResult.Failed(500, context.Exception.Message));
                     context.ExceptionHandled = true;
                 }
             }
