@@ -19,7 +19,7 @@ namespace Rock.Core.AccountApp
         public async Task<AccountLoginOutput> LoginAsync(AccountLoginInput loginInput)
         {
             var resp = _unitOfWork.Repository<Account>();
-
+            resp.IgnoreQueryFilters();
             var account = await resp.FindAsync(x => x.Mobile == loginInput.EmailOrMobile || x.Email == loginInput.EmailOrMobile);
             if (account == null)
             {
@@ -34,7 +34,7 @@ namespace Rock.Core.AccountApp
             return new AccountLoginOutput
             {
                 Uid = account.Id,
-                TenantId = 0
+                TenantId = account.TenantId
             };
         }
 

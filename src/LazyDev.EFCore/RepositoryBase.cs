@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LazyDev.EFCore.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LazyDev.EFCore.Entities;
 
 namespace LazyDev.EFCore
 {
@@ -15,6 +15,13 @@ namespace LazyDev.EFCore
         {
             _dbSet = dbContext.Set<TEntity>();
         }
+
+        private bool _ignoreQueryFilter;
+        public void IgnoreQueryFilters()
+        {
+            _ignoreQueryFilter = true;
+        }
+
         public async Task AddAsync(TEntity entity)
         {
            await _dbSet.AddAsync(entity);
@@ -27,25 +34,25 @@ namespace LazyDev.EFCore
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbSet.AnyAsync(expression);
+            return await GetQueryable().AnyAsync(expression);
         }
         public async Task<long> CountAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbSet.LongCountAsync(expression);
+            return await GetQueryable().LongCountAsync(expression);
         }
         public async Task<TEntity> FindAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await FindAsync(x => x.Id == id);
         }
 
         public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> expression)
         {
-           return await _dbSet.FirstOrDefaultAsync(expression);
+            return await GetQueryable().FirstOrDefaultAsync(expression);
         }
 
         public IQueryable<TEntity> GetQueryable()
         {
-            return _dbSet.AsQueryable();
+            return _ignoreQueryFilter ? _dbSet.IgnoreQueryFilters() : _dbSet.AsQueryable();
         }
 
         public void Remove(TEntity entity)

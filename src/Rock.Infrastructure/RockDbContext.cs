@@ -1,9 +1,8 @@
-﻿using System.Reflection;
-using LazyDev.Core.Runtime;
+﻿using LazyDev.Core.Runtime;
 using LazyDev.EFCore;
-using LazyDev.EFCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Rock.Core.Entities;
+using System.Reflection;
 
 namespace Rock.Infrastructure
 {

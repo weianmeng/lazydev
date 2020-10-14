@@ -9,6 +9,7 @@ namespace LazyDev.EFCore
 {
     public interface IRepository<TEntity>  where TEntity:class,IEntity
     {
+        void IgnoreQueryFilters();
         Task AddAsync(TEntity entity);
         Task AddAsync(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
