@@ -19,6 +19,7 @@ namespace Rock.Core.AccountApp
         public async Task<AccountLoginOutput> LoginAsync(AccountLoginInput loginInput)
         {
             var resp = _unitOfWork.Repository<Account>();
+
             var account = await resp.FindAsync(x => x.Mobile == loginInput.EmailOrMobile || x.Email == loginInput.EmailOrMobile);
             if (account == null)
             {

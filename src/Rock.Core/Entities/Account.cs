@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using LazyDev.EFCore.Entities;
 
 namespace Rock.Core.Entities
 {
-    public class Account : EntityBase
+    public class Account : Entity
     {
         public string NickName { get; set; }
         public string Password { get; set; }

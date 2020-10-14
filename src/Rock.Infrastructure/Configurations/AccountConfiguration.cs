@@ -16,6 +16,8 @@ namespace Rock.Infrastructure.Configurations
             builder.Property(x => x.Password).HasColumnName("password").HasMaxLength(15);
             builder.Property(x => x.Salt).HasColumnName("salt").HasMaxLength(6);
             builder.Property(x => x.Status).HasColumnName("status");
+            builder.Property(x => x.TenantId).HasColumnName("tenant_id");
+
             builder.HasMany(b=>b.AccountClaims).WithOne().HasForeignKey(x=>x.AccountId);
         }
     }
