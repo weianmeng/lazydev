@@ -9,7 +9,6 @@ namespace Rock.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<SysInfo> builder)
         {
             builder.ToTable("sys_info");
-            builder.Property(x => x.Id).HasColumnName("id");
             builder.Property(x => x.Version).HasColumnName("version").HasMaxLength(20);
         }
     }

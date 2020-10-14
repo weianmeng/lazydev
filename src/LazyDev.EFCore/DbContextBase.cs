@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using LazyDev.Core.Runtime;
 using LazyDev.EFCore.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +20,44 @@ namespace LazyDev.EFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //全局租户过滤
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if (typeof(ITenant).IsAssignableFrom(entityType.ClrType))
+                ConfigureGlobalFiltersMethodInfo.MakeGenericMethod(entityType.ClrType)
+                    .Invoke(this, new object[] { modelBuilder });
+            }
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries().ToList())
+            {
+                var entity = (IEntity)entry.Entity;
+                var time = DateTime.Now;
+                switch (entry.State)
                 {
-                    ConfigureGlobalFiltersMethodInfo.MakeGenericMethod(entityType.ClrType)
-                        .Invoke(this, new object[] { modelBuilder });
+                    case EntityState.Added:
+                        entity.CreatedBy = _lazyDevSession.UId;
+                        entity.CreatedTime = time;
+                        entity.UpdatedBy = _lazyDevSession.UId;
+                        entity.UpdatedTime = time;
+                        entity.TenantId = _lazyDevSession.TenantId;
+                        break;
+                    case EntityState.Modified:
+                        entity.UpdatedBy = _lazyDevSession.UId;
+                        entity.UpdatedTime = time;
+                        break;
+                    case EntityState.Deleted:
+                        entry.Reload();
+                        entity.UpdatedBy = _lazyDevSession.UId;
+                        entity.UpdatedTime = time;
+                        entity.SoftDeleted = true;
+                        entry.State = EntityState.Modified;
+                        break;
                 }
             }
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         #region 租户全局过滤
@@ -31,9 +65,17 @@ namespace LazyDev.EFCore
         private static readonly MethodInfo ConfigureGlobalFiltersMethodInfo =
             typeof(DbContextBase).GetMethod(nameof(ConfigureGlobalFilter),
                 BindingFlags.Instance | BindingFlags.NonPublic);
-        protected virtual void ConfigureGlobalFilter<T>(ModelBuilder builder) where T : class, ITenant
+        protected virtual void ConfigureGlobalFilter<T>(ModelBuilder builder) where T : class, IEntity
         {
-            builder.Entity<T>().HasQueryFilter(x => x.TenantId == _lazyDevSession.TenantId);
+            builder.Entity<T>().Property(x => x.Id).HasColumnName("id");
+            builder.Entity<T>().Property(x => x.UpdatedBy).HasColumnName("updated_by");
+            builder.Entity<T>().Property(x => x.UpdatedTime).HasColumnName("updated_time");
+            builder.Entity<T>().Property(x => x.CreatedBy).HasColumnName("created_by");
+            builder.Entity<T>().Property(x => x.CreatedTime).HasColumnName("created_time");
+            builder.Entity<T>().Property(x => x.SoftDeleted).HasColumnName("soft_deleted");
+            builder.Entity<T>().Property(x => x.TenantId).HasColumnName("tenant_id");
+
+            builder.Entity<T>().HasQueryFilter(x => x.TenantId == _lazyDevSession.TenantId && x.SoftDeleted == false);
         }
 
         #endregion

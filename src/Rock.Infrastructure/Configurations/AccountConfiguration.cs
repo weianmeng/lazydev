@@ -9,7 +9,7 @@ namespace Rock.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Account> builder)
         {
             builder.ToTable("account");
-            builder.Property(x => x.Id).HasColumnName("id");
+
             builder.Property(x => x.NickName).HasColumnName("nick_name").HasMaxLength(20);
             builder.Property(x => x.Mobile).HasColumnName("mobile").HasMaxLength(15);
             builder.Property(x => x.Email).HasColumnName("email").HasMaxLength(20);
