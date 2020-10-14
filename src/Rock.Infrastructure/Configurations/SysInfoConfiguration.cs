@@ -11,7 +11,6 @@ namespace Rock.Infrastructure.Configurations
             builder.ToTable("sys_info");
             builder.Property(x => x.Id).HasColumnName("id");
             builder.Property(x => x.Version).HasColumnName("version").HasMaxLength(20);
-            builder.Property(x => x.TenantId).HasColumnName("tenant_id");
         }
     }
 }

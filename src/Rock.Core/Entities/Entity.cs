@@ -2,7 +2,7 @@
 
 namespace Rock.Core.Entities
 {
-    public class Entity:EntityBase,ITenantEntity<int>
+    public class Entity:EntityBase,ITenant
     {
         public int TenantId { get; set; }
     }

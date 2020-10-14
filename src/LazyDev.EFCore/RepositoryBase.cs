@@ -8,7 +8,7 @@ using LazyDev.EFCore.Entities;
 
 namespace LazyDev.EFCore
 {
-    public class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly DbSet<TEntity> _dbSet;
         public RepositoryBase(DbContext dbContext)
@@ -33,7 +33,7 @@ namespace LazyDev.EFCore
         {
             return await _dbSet.LongCountAsync(expression);
         }
-        public async Task<TEntity> FindAsync(TKey id)
+        public async Task<TEntity> FindAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -66,13 +66,6 @@ namespace LazyDev.EFCore
         public void Update(IEnumerable<TEntity> entities)
         {
             _dbSet.UpdateRange(entities);
-        }
-    }
-
-    public class RepositoryBase<TEntity> : RepositoryBase<TEntity, int>, IRepository<TEntity> where TEntity : class, IEntity<int>
-    {
-        public RepositoryBase(DbContext dbContext) : base(dbContext)
-        {
         }
     }
 }

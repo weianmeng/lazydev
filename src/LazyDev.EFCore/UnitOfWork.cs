@@ -14,20 +14,11 @@ namespace LazyDev.EFCore
             _dbContext = dbContext;
         }
 
-        public IRepository<TEntity, TKey> Repository< TEntity,TKey>() where TEntity : class, IEntity<TKey>
-        {
-           var rep = _dbContext.GetService<IRepository<TEntity, TKey>>();
-
-           return rep;
-
-        }
-
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity<int>
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
         {
             var rep = _dbContext.GetService<IRepository<TEntity>>();
             return rep;
         }
-
 
         public async Task<int> CommitAsync()
         {

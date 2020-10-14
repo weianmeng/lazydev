@@ -1,11 +1,7 @@
 ﻿namespace LazyDev.EFCore.Entities
 {
-    public abstract class EntityBase<T> : IEntity<T>
+    public abstract class EntityBase:IEntity
     {
-        public T Id { get; set; }
-    }
-
-    public abstract class EntityBase: EntityBase<int>
-    {
+        public int Id { get; set; }
     }
 }

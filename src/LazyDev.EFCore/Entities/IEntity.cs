@@ -1,7 +1,7 @@
 ﻿namespace LazyDev.EFCore.Entities
 {
-    public interface IEntity<T>
+    public interface IEntity
     {
-        T Id { get; set; }
+        int Id { get; set; }
     }
 }

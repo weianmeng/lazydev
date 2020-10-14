@@ -8,7 +8,6 @@ namespace LazyDev.Core
     {
         public override void Register(IServiceCollection services)
         {
-            services.AddScoped(typeof(ILazyDevSession<>),typeof(NullSession<>));
             services.AddScoped(typeof(ILazyDevSession), typeof(NullSession));
         }
     }

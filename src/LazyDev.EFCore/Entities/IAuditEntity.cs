@@ -2,7 +2,7 @@
 
 namespace LazyDev.EFCore.Entities
 {
-    public interface IAuditEntity<T>:IEntity<T>
+    public interface IAuditEntity:IEntity
     {
         bool SoftDeleted { get; set; }
         int UpdatedBy { get; set; }
