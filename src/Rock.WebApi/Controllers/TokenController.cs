@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using LazyDev.Core.Extensions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Rock.Core.AccountApp.Dto;
 using Rock.WebApi.Jwt;
 
 namespace Rock.WebApi.Controllers

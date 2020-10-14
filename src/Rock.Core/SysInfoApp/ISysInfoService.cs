@@ -1,10 +1,10 @@
-﻿using LazyDev.Core.Dependency;
-using Rock.Core.Entities;
-using Rock.Core.SysInfos.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LazyDev.Core.Dependency;
+using Rock.Core.Entities;
+using Rock.Core.SysInfoApp.Dto;
 
-namespace Rock.Core.SysInfos
+namespace Rock.Core.SysInfoApp
 {
     public interface ISysInfoService:IScopedDependency
     {

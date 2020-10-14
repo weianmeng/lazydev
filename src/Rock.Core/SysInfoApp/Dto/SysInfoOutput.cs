@@ -1,4 +1,4 @@
-﻿namespace Rock.Core.SysInfos.Dto
+﻿namespace Rock.Core.SysInfoApp.Dto
 {
     public class SysInfoOutput
     {

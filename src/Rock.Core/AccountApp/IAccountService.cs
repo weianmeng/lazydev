@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using LazyDev.Core.Dependency;
+using Rock.Core.AccountApp.Dto;
 
 namespace Rock.Core.AccountApp
 {

@@ -1,4 +1,4 @@
-﻿namespace Rock.Core.AccountApp
+﻿namespace Rock.Core.AccountApp.Dto
 {
     public class AccountLoginOutput
     {

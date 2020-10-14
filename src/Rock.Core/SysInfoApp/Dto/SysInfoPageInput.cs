@@ -1,6 +1,6 @@
 ﻿using LazyDev.Core.Common;
 
-namespace Rock.Core.SysInfos.Dto
+namespace Rock.Core.SysInfoApp.Dto
 {
     public class SysInfoPageInput: PageRequestBase
     {

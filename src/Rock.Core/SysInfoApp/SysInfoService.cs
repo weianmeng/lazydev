@@ -1,13 +1,13 @@
-﻿using LazyDev.Core.Extensions;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LazyDev.Core.Common;
+using LazyDev.Core.Extensions;
 using LazyDev.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Rock.Core.Entities;
-using Rock.Core.SysInfos.Dto;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using LazyDev.Core.Common;
+using Rock.Core.SysInfoApp.Dto;
 
-namespace Rock.Core.SysInfos
+namespace Rock.Core.SysInfoApp
 {
     public class SysInfoService:ISysInfoService
     {

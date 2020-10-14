@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Rock.Core.AccountApp;
 using System.Threading.Tasks;
+using Rock.Core.AccountApp.Dto;
 
 namespace Rock.WebApi.Controllers
 {

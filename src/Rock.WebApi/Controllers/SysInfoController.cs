@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Rock.Core.Entities;
 using System.Threading.Tasks;
 using LazyDev.EFCore;
-using Rock.Core.SysInfos;
-using Rock.Core.SysInfos.Dto;
+using Rock.Core.SysInfoApp;
+using Rock.Core.SysInfoApp.Dto;
 
 namespace Rock.WebApi.Controllers
 {

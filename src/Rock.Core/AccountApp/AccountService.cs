@@ -3,6 +3,7 @@ using LazyDev.Core.Utility;
 using LazyDev.EFCore;
 using Rock.Core.Entities;
 using System.Threading.Tasks;
+using Rock.Core.AccountApp.Dto;
 
 namespace Rock.Core.AccountApp
 {
