@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LazyDev.Core.Runtime;
+using LazyDev.EFCore.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using LazyDev.Core.Runtime;
-using LazyDev.EFCore.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace LazyDev.EFCore
 {

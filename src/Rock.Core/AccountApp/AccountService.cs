@@ -20,7 +20,8 @@ namespace Rock.Core.AccountApp
         {
             var resp = _unitOfWork.Repository<Account>();
             resp.IgnoreQueryFilters();
-            var account = await resp.FindAsync(x => x.Mobile == loginInput.EmailOrMobile || x.Email == loginInput.EmailOrMobile);
+            var emailOrMobile = loginInput.EmailOrMobile.ToUpper();
+            var account = await resp.FindAsync(x => x.Mobile == emailOrMobile || x.Email == emailOrMobile);
             if (account == null)
             {
                 throw new FriendlyException("账号错误!");
@@ -53,7 +54,7 @@ namespace Rock.Core.AccountApp
                 NickName = accountInput.NickName,
                 Salt = salt,
                 Password = password,
-                Email = accountInput.Email,
+                Email = accountInput.Email.ToUpper(),
                 Mobile = accountInput.Mobile
             };
 
@@ -66,7 +67,7 @@ namespace Rock.Core.AccountApp
         public async Task<AccountInfoOutput> GetAccountInfo(AccountInfoInput accountInfoInput)
         {
             var resp = _unitOfWork.Repository<Account>();
-            var account = await resp.FindAsync(x => x.Mobile == accountInfoInput.Mobile);
+            var account = await resp.FindAsync(x => x.Mobile == accountInfoInput.Mobile.ToUpper());
             if (account == null)
             {
                 throw new FriendlyException("未找到用户!");
