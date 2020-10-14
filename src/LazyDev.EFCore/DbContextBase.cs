@@ -39,19 +39,19 @@ namespace LazyDev.EFCore
                 {
                     case EntityState.Added:
                         entity.CreatedBy = _lazyDevSession.UId;
-                        entity.CreatedTime = time;
+                        entity.CreatedAt = time;
                         entity.UpdatedBy = _lazyDevSession.UId;
-                        entity.UpdatedTime = time;
+                        entity.UpdatedAt = time;
                         entity.TenantId = _lazyDevSession.TenantId;
                         break;
                     case EntityState.Modified:
                         entity.UpdatedBy = _lazyDevSession.UId;
-                        entity.UpdatedTime = time;
+                        entity.UpdatedAt = time;
                         break;
                     case EntityState.Deleted:
                         entry.Reload();
                         entity.UpdatedBy = _lazyDevSession.UId;
-                        entity.UpdatedTime = time;
+                        entity.UpdatedAt = time;
                         entity.SoftDeleted = true;
                         entry.State = EntityState.Modified;
                         break;
@@ -60,7 +60,7 @@ namespace LazyDev.EFCore
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        #region 租户全局过滤
+        #region 租户软删除全局过滤
 
         private static readonly MethodInfo ConfigureGlobalFiltersMethodInfo =
             typeof(DbContextBase).GetMethod(nameof(ConfigureGlobalFilter),
@@ -69,9 +69,9 @@ namespace LazyDev.EFCore
         {
             builder.Entity<T>().Property(x => x.Id).HasColumnName("id");
             builder.Entity<T>().Property(x => x.UpdatedBy).HasColumnName("updated_by");
-            builder.Entity<T>().Property(x => x.UpdatedTime).HasColumnName("updated_time");
+            builder.Entity<T>().Property(x => x.UpdatedAt).HasColumnName("updated_at");
             builder.Entity<T>().Property(x => x.CreatedBy).HasColumnName("created_by");
-            builder.Entity<T>().Property(x => x.CreatedTime).HasColumnName("created_time");
+            builder.Entity<T>().Property(x => x.CreatedAt).HasColumnName("created_at");
             builder.Entity<T>().Property(x => x.SoftDeleted).HasColumnName("soft_deleted");
             builder.Entity<T>().Property(x => x.TenantId).HasColumnName("tenant_id");
 
