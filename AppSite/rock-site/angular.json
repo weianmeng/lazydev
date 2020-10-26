@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rock-site"
+    }
+  },
+  "defaultProject": "rock-site",
+  "cli": {
+    "analytics": false
+  }
 }
